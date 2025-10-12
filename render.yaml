@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: mlep-site
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:///./data/mlep_dev.db
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SESSION_SECRET
+        generateValue: true
+    disk:
+      name: mlep-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
