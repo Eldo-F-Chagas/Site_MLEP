@@ -1,0 +1,33 @@
+# FastAPI and web framework dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+jinja2==3.1.2
+
+# Database dependencies
+sqlalchemy==2.0.23
+alembic==1.12.1
+
+# Validation and serialization
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Email and contact form
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+email-validator
+
+
+
+# Development and testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Optional: for future integrations
+requests==2.31.0
+python-dotenv==1.0.0
+
+# Authentication dependencies
+authlib==1.2.1
+itsdangerous==2.1.2

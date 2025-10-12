@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipe - MLEP</title>
+    <meta name="description" content="Conheça a equipe do MLEP - Machine Learning Aplicado à Física Ambiental">
+    <meta name="keywords" content="equipe, pesquisadores, estudantes, machine learning, física ambiental">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mlep.example.com/team">
+    <meta property="og:title" content="Equipe - MLEP">
+    <meta property="og:description" content="Conheça nossa equipe de pesquisadores e estudantes em Machine Learning Aplicado à Física Ambiental">
+    <meta property="og:image" content="/assets/img/og-team.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mlep.example.com/team">
+    <meta property="twitter:title" content="Equipe - MLEP">
+    <meta property="twitter:description" content="Conheça nossa equipe de pesquisadores e estudantes em Machine Learning Aplicado à Física Ambiental">
+    <meta property="twitter:image" content="/assets/img/og-team.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/team.css">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/assets/js/main.js" as="script">
+    <link rel="preload" href="/assets/js/i18n.js" as="script">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link" data-i18n="common.skip_to_content">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Main navigation">
+            <div class="nav__brand">
+                <a href="/" class="nav__logo" aria-label="MLEP Home">
+                    <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                    <span class="nav__logo-text">MLEP</span>
+                </a>
+            </div>
+
+            <button class="nav__toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+            </button>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/" class="nav__link" data-i18n="nav.home">Início</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/about" class="nav__link" data-i18n="nav.about">Sobre</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/research" class="nav__link" data-i18n="nav.research">Pesquisa</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/publications" class="nav__link" data-i18n="nav.publications">Publicações</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/projects" class="nav__link" data-i18n="nav.projects">Projetos</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/team" class="nav__link nav__link--active" data-i18n="nav.team">Equipe</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/news" class="nav__link" data-i18n="nav.news">Notícias</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/contact" class="nav__link" data-i18n="nav.contact">Contato</a>
+                    </li>
+                    <li class="nav__item nav__item--highlight">
+                        <a href="#" class="nav__link nav__link--cta" id="datalab-link" data-i18n="nav.datalab">Data Lab</a>
+                    </li>
+                </ul>
+
+                <div class="nav__controls">
+                    <button class="nav__control" id="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="icon icon--sun" aria-hidden="true">☀️</span>
+                        <span class="icon icon--moon" aria-hidden="true">🌙</span>
+                    </button>
+                    <button class="nav__control" id="lang-toggle" aria-label="Change language">
+                        <span class="lang-text">PT</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-header__title" data-i18n="team.title">Nossa Equipe</h1>
+                <p class="page-header__subtitle">
+                    Conheça os pesquisadores, estudantes e colaboradores que fazem parte do MLEP.
+                </p>
+            </div>
+        </section>
+
+        <!-- Team Statistics -->
+        <section class="section section--stats">
+            <div class="container">
+                <div class="team-stats" id="team-stats">
+                    <!-- Stats will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Filters -->
+        <section class="section section--filters">
+            <div class="container">
+                <div class="team-filters">
+                    <div class="filter-group">
+                        <label for="role-filter" class="filter-label">Filtrar por função:</label>
+                        <select id="role-filter" class="filter-select">
+                            <option value="">Todas as funções</option>
+                            <option value="principal_investigator" data-i18n="team.role_principal_investigator">Pesquisador Principal</option>
+                            <option value="researcher" data-i18n="team.role_researcher">Pesquisador</option>
+                            <option value="postdoc" data-i18n="team.role_postdoc">Pós-doutorando</option>
+                            <option value="phd_student" data-i18n="team.role_phd_student">Doutorando</option>
+                            <option value="masters_student" data-i18n="team.role_masters_student">Mestrando</option>
+                            <option value="undergraduate" data-i18n="team.role_undergraduate">Graduando</option>
+                            <option value="collaborator" data-i18n="team.role_collaborator">Colaborador</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="alumni-toggle" class="filter-label">
+                            <input type="checkbox" id="alumni-toggle" class="filter-checkbox">
+                            <span data-i18n="team.role_alumni">Incluir ex-membros</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Members -->
+        <section class="section section--team-members">
+            <div class="container">
+                <!-- Principal Investigators -->
+                <div class="team-section" id="principal-investigators">
+                    <h2 class="team-section__title" data-i18n="team.role_principal_investigator">Pesquisadores Principais</h2>
+                    <div class="team-grid" id="pi-grid">
+                        <!-- PIs will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Researchers -->
+                <div class="team-section" id="researchers">
+                    <h2 class="team-section__title" data-i18n="team.role_researcher">Pesquisadores</h2>
+                    <div class="team-grid" id="researchers-grid">
+                        <!-- Researchers will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Postdocs -->
+                <div class="team-section" id="postdocs">
+                    <h2 class="team-section__title" data-i18n="team.role_postdoc">Pós-doutorandos</h2>
+                    <div class="team-grid" id="postdocs-grid">
+                        <!-- Postdocs will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- PhD Students -->
+                <div class="team-section" id="phd-students">
+                    <h2 class="team-section__title" data-i18n="team.role_phd_student">Doutorandos</h2>
+                    <div class="team-grid" id="phd-grid">
+                        <!-- PhD students will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Masters Students -->
+                <div class="team-section" id="masters-students">
+                    <h2 class="team-section__title" data-i18n="team.role_masters_student">Mestrandos</h2>
+                    <div class="team-grid" id="masters-grid">
+                        <!-- Masters students will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Undergraduates -->
+                <div class="team-section" id="undergraduates">
+                    <h2 class="team-section__title" data-i18n="team.role_undergraduate">Graduandos</h2>
+                    <div class="team-grid" id="undergrad-grid">
+                        <!-- Undergraduates will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Collaborators -->
+                <div class="team-section" id="collaborators">
+                    <h2 class="team-section__title" data-i18n="team.role_collaborator">Colaboradores</h2>
+                    <div class="team-grid" id="collaborators-grid">
+                        <!-- Collaborators will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Alumni -->
+                <div class="team-section" id="alumni" style="display: none;">
+                    <h2 class="team-section__title" data-i18n="team.role_alumni">Ex-membros</h2>
+                    <div class="team-grid" id="alumni-grid">
+                        <!-- Alumni will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div class="loading" id="team-loading" data-i18n="common.loading">Carregando...</div>
+            </div>
+        </section>
+
+        <!-- Join Us Section -->
+        <section class="section section--join-us">
+            <div class="container">
+                <div class="join-us">
+                    <h2 class="join-us__title">Junte-se ao MLEP</h2>
+                    <p class="join-us__description">
+                        Estamos sempre procurando por pesquisadores talentosos e estudantes motivados 
+                        para se juntar à nossa equipe. Se você tem interesse em machine learning aplicado 
+                        à física ambiental, entre em contato conosco.
+                    </p>
+                    <div class="join-us__actions">
+                        <a href="/contact" class="btn btn--primary">Entre em Contato</a>
+                        <a href="/research" class="btn btn--secondary">Conheça Nossa Pesquisa</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.about_mlep">Sobre o MLEP</h3>
+                    <p class="footer__text">
+                        Grupo de pesquisa dedicado à aplicação de machine learning em física ambiental,
+                        desenvolvendo soluções inovadoras para compreender e proteger o meio ambiente.
+                    </p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.quick_links">Links Rápidos</h3>
+                    <ul class="footer__links">
+                        <li><a href="/about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="/research" data-i18n="nav.research">Pesquisa</a></li>
+                        <li><a href="/publications" data-i18n="nav.publications">Publicações</a></li>
+                        <li><a href="/team" data-i18n="nav.team">Equipe</a></li>
+                        <li><a href="/contact" data-i18n="nav.contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.contact_info">Informações de Contato</h3>
+                    <div class="footer__contact">
+                        <p>📧 contato@mlep.example.com</p>
+                        <p>📍 Universidade Federal, Campus Principal</p>
+                        <p>🌐 <a href="#" id="footer-datalab-link" data-i18n="nav.datalab">Data Lab</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright" data-i18n="footer.copyright">
+                    © 2024 MLEP - Machine Learning Applied to Environmental Physics. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/team.js"></script>
+</body>
+</html>

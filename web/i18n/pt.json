@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "research": "Pesquisa",
+    "publications": "Publicações",
+    "projects": "Projetos",
+    "team": "Equipe",
+    "news": "Notícias",
+    "events": "Eventos",
+    "resources": "Recursos",
+    "contact": "Contato",
+    "courses": "Cursos",
+    "datalab": "Cursos Data Lab"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "view": "Visualizar",
+    "download": "Baixar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "page": "Página",
+    "of": "de",
+    "results": "resultados",
+    "no_results": "Nenhum resultado encontrado",
+    "skip_to_content": "Pular para o conteúdo principal"
+  },
+  "home": {
+    "title": "MLEP - Machine Learning Aplicado à Física Ambiental",
+    "subtitle": "Pesquisa avançada em inteligência artificial para ciências ambientais",
+    "hero_cta": "Conheça nossa pesquisa",
+    "featured_research": "Pesquisa em Destaque",
+    "latest_publications": "Publicações Recentes",
+    "current_projects": "Projetos Atuais",
+    "recent_news": "Notícias Recentes"
+  },
+  "accessibility": {
+    "skip_to_content": "Pular para o conteúdo principal",
+    "main_navigation": "Navegação principal",
+    "search": "Buscar",
+    "language_toggle": "Alternar idioma",
+    "theme_toggle": "Alternar tema"
+  }
+}

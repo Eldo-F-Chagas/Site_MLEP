@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - MLEP</title>
+    <meta name="description" content="Entre em contato com o MLEP - Grupo de pesquisa em Machine Learning Aplicado à Física Ambiental">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Main navigation">
+            <div class="nav__brand">
+                <a href="/" class="nav__logo" aria-label="MLEP Home">
+                    <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                    <span class="nav__logo-text">MLEP</span>
+                </a>
+            </div>
+
+            <button class="nav__toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+            </button>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/" class="nav__link" data-i18n="nav.home">Início</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/about" class="nav__link" data-i18n="nav.about">Sobre</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/research" class="nav__link" data-i18n="nav.research">Pesquisa</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/publications" class="nav__link" data-i18n="nav.publications">Publicações</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/projects" class="nav__link" data-i18n="nav.projects">Projetos</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/team" class="nav__link" data-i18n="nav.team">Equipe</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/news" class="nav__link" data-i18n="nav.news">Notícias</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/contact" class="nav__link nav__link--active" data-i18n="nav.contact">Contato</a>
+                    </li>
+                    <li class="nav__item nav__item--highlight">
+                        <a href="#" class="nav__link nav__link--cta" id="datalab-link" data-i18n="nav.datalab">Data Lab</a>
+                    </li>
+                </ul>
+
+                <div class="nav__controls">
+                    <button class="nav__control" id="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="icon icon--sun" aria-hidden="true">☀️</span>
+                        <span class="icon icon--moon" aria-hidden="true">🌙</span>
+                    </button>
+                    <button class="nav__control" id="lang-toggle" aria-label="Change language">
+                        <span class="lang-text">PT</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Page Header -->
+        <section class="section section--page-header">
+            <div class="container">
+                <h1 class="section__title" data-i18n="contact.title">Contato</h1>
+                <p class="section__subtitle">
+                    Entre em contato conosco para colaborações, dúvidas ou oportunidades de pesquisa.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Form and Info -->
+        <section class="section">
+            <div class="container">
+                <div class="grid grid--2">
+                    <!-- Contact Form -->
+                    <div class="contact-form-section">
+                        <h2>Envie uma mensagem</h2>
+                        <form id="contact-form" class="contact-form" data-validate>
+                            <div class="form-group">
+                                <label for="name" class="form-label" data-i18n="contact.form_name">Nome</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label" data-i18n="contact.form_email">E-mail</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-type" class="form-label" data-i18n="contact.form_type">Tipo de contato</label>
+                                <select id="contact-type" name="contact_type" class="form-select">
+                                    <option value="general" data-i18n="contact.type_general">Geral</option>
+                                    <option value="collaboration" data-i18n="contact.type_collaboration">Colaboração</option>
+                                    <option value="media" data-i18n="contact.type_media">Imprensa</option>
+                                    <option value="student" data-i18n="contact.type_student">Estudante</option>
+                                    <option value="funding" data-i18n="contact.type_funding">Financiamento</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject" class="form-label" data-i18n="contact.form_subject">Assunto</label>
+                                <input type="text" id="subject" name="subject" class="form-input" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" class="form-label" data-i18n="contact.form_message">Mensagem</label>
+                                <textarea id="message" name="message" class="form-textarea" rows="6" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn--primary btn--lg" data-i18n="contact.send">
+                                Enviar
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="contact-info-section">
+                        <h2>Informações de Contato</h2>
+                        
+                        <div class="contact-info">
+                            <div class="contact-info__item">
+                                <h3>📧 E-mail</h3>
+                                <p>contato@mlep.example.com</p>
+                            </div>
+
+                            <div class="contact-info__item">
+                                <h3>📍 Endereço</h3>
+                                <p>
+                                    Universidade Federal<br>
+                                    Instituto de Física<br>
+                                    Campus Principal<br>
+                                    CEP: 00000-000<br>
+                                    Cidade, Estado
+                                </p>
+                            </div>
+
+                            <div class="contact-info__item">
+                                <h3>🌐 Links Úteis</h3>
+                                <ul>
+                                    <li><a href="#" id="contact-datalab-link">Data Lab</a></li>
+                                    <li><a href="/publications">Publicações</a></li>
+                                    <li><a href="/projects">Projetos</a></li>
+                                    <li><a href="/team">Equipe</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="contact-info__item">
+                                <h3>🕒 Horário de Atendimento</h3>
+                                <p>
+                                    Segunda a Sexta: 9h às 17h<br>
+                                    Sábado: 9h às 12h<br>
+                                    Domingo: Fechado
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="section section--newsletter">
+            <div class="container">
+                <div class="newsletter-card">
+                    <div class="newsletter-content">
+                        <h2 class="newsletter-title" data-i18n="contact.newsletter_title">Newsletter</h2>
+                        <p class="newsletter-description" data-i18n="contact.newsletter_description">
+                            Receba atualizações sobre nossas pesquisas e eventos
+                        </p>
+                    </div>
+                    
+                    <form id="newsletter-form" class="newsletter-form">
+                        <div class="newsletter-input-group">
+                            <input 
+                                type="email" 
+                                id="newsletter-email" 
+                                name="email" 
+                                class="form-input newsletter-input" 
+                                placeholder="Seu e-mail"
+                                data-i18n="contact.newsletter_email"
+                                required
+                            >
+                            <button type="submit" class="btn btn--primary" data-i18n="contact.subscribe">
+                                Inscrever-se
+                            </button>
+                        </div>
+                        <p class="newsletter-privacy">
+                            Respeitamos sua privacidade. Você pode cancelar a inscrição a qualquer momento.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.about_mlep">Sobre o MLEP</h3>
+                    <p class="footer__text">
+                        Grupo de pesquisa dedicado à aplicação de machine learning em física ambiental,
+                        desenvolvendo soluções inovadoras para compreender e proteger o meio ambiente.
+                    </p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.quick_links">Links Rápidos</h3>
+                    <ul class="footer__links">
+                        <li><a href="/about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="/research" data-i18n="nav.research">Pesquisa</a></li>
+                        <li><a href="/publications" data-i18n="nav.publications">Publicações</a></li>
+                        <li><a href="/team" data-i18n="nav.team">Equipe</a></li>
+                        <li><a href="/contact" data-i18n="nav.contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.contact_info">Informações de Contato</h3>
+                    <div class="footer__contact">
+                        <p>📧 contato@mlep.example.com</p>
+                        <p>📍 Universidade Federal, Campus Principal</p>
+                        <p>🌐 <a href="#" id="footer-datalab-link" data-i18n="nav.datalab">Data Lab</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright" data-i18n="footer.copyright">
+                    © 2024 MLEP - Machine Learning Applied to Environmental Physics. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/contact.js"></script>
+</body>
+</html>

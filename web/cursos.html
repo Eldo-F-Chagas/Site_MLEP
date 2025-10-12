@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="courses.title">Cursos - Data Lab | MLEP</title>
+    <meta name="description" content="Cursos online do MLEP Data Lab sobre Machine Learning aplicado à Física Ambiental">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/courses.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    
+    <!-- Schema.org markup for courses -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "MLEP Data Lab",
+        "description": "Cursos de Machine Learning aplicado à Física Ambiental",
+        "url": "https://mlep.example.com/cursos"
+    }
+    </script>
+</head>
+<body class="course-page">
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link" data-i18n="accessibility.skip_to_content">Pular para o conteúdo principal</a>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+        </div>
+        <p class="loading-text">Carregando cursos...</p>
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__brand">
+                    <a href="/" class="logo">
+                        <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                        <span class="logo__text">MLEP</span>
+                    </a>
+                </div>
+                
+                <nav class="nav" aria-label="Navegação principal">
+                    <ul class="nav__list">
+                        <li><a href="/" data-i18n="nav.home">Início</a></li>
+                        <li><a href="/about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="/research" data-i18n="nav.research">Pesquisa</a></li>
+                        <li><a href="/publications" data-i18n="nav.publications">Publicações</a></li>
+                        <li><a href="/projects" data-i18n="nav.projects">Projetos</a></li>
+                        <li><a href="/team" data-i18n="nav.team">Equipe</a></li>
+                        <li><a href="/news" data-i18n="nav.news">Notícias</a></li>
+                        <li><a href="/cursos" data-i18n="nav.courses" class="nav__link--active">Cursos</a></li>
+                        <li><a href="/contact" data-i18n="nav.contact">Contato</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header__actions">
+                    <!-- User Profile -->
+                    <div class="user-profile" id="user-profile" style="display: none;">
+                        <div class="user-avatar">
+                            <img id="user-avatar-img" src="/assets/img/default-avatar.svg" alt="Avatar do usuário">
+                            <span id="user-avatar-text" class="user-avatar-text"></span>
+                        </div>
+                        <div class="user-info">
+                            <span id="user-name" class="user-name"></span>
+                            <span id="user-email" class="user-email"></span>
+                        </div>
+                        <div class="user-menu">
+                            <button class="user-menu-toggle" aria-label="Menu do usuário">
+                                <span>⋮</span>
+                            </button>
+                            <div class="user-menu-dropdown">
+                                <a href="/profile" class="user-menu-item">
+                                    <span>👤</span> Perfil
+                                </a>
+                                <a href="/settings" class="user-menu-item">
+                                    <span>⚙️</span> Configurações
+                                </a>
+                                <hr class="user-menu-divider">
+                                <button class="user-menu-item logout-btn" onclick="logout()">
+                                    <span>🚪</span> Sair
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Login Button (shown when not logged in) -->
+                    <a href="/login" class="login-btn" id="login-btn" style="display: none;">
+                        <span>🔐</span> Entrar
+                    </a>
+
+                    <button class="theme-toggle" aria-label="Alternar tema">
+                        <span class="theme-toggle__icon">🌙</span>
+                    </button>
+                    <button class="lang-toggle" aria-label="Alternar idioma">
+                        <span class="lang-toggle__text">EN</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="main">
+        <!-- Welcome Section -->
+        <section class="welcome-section" id="welcome-section" style="display: none;">
+            <div class="container">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h1 class="welcome-title">
+                            Bem-vindo de volta, <span id="welcome-user-name"></span>! 👋
+                        </h1>
+                        <p class="welcome-description">
+                            Continue sua jornada de aprendizado em Machine Learning aplicado à Física Ambiental.
+                        </p>
+                        <div class="welcome-stats">
+                            <div class="welcome-stat">
+                                <span class="stat-number" id="user-progress">0%</span>
+                                <span class="stat-label">Progresso Geral</span>
+                            </div>
+                            <div class="welcome-stat">
+                                <span class="stat-number" id="user-courses">0</span>
+                                <span class="stat-label">Cursos Iniciados</span>
+                            </div>
+                            <div class="welcome-stat">
+                                <span class="stat-number" id="user-certificates">0</span>
+                                <span class="stat-label">Certificados</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="welcome-actions">
+                        <button class="btn btn-primary" id="continue-learning-btn">
+                            📚 Continuar Aprendendo
+                        </button>
+                        <button class="btn btn-secondary" id="browse-courses-btn">
+                            🔍 Explorar Cursos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="page-header__content">
+                    <h1 class="page-header__title" data-i18n="courses.page_title">Cursos Data Lab</h1>
+                    <p class="page-header__description" data-i18n="courses.page_description">
+                        Aprenda Machine Learning aplicado à Física Ambiental com nossos cursos práticos e interativos.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Course Filters -->
+        <section class="course-filters">
+            <div class="container">
+                <div class="filters">
+                    <div class="filters__search">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            class="search-input" 
+                            placeholder="Buscar cursos..."
+                            data-i18n-placeholder="courses.search_placeholder"
+                        >
+                    </div>
+                    
+                    <div class="filters__tabs">
+                        <button class="filter-tab filter-tab--active" data-filter="all" data-i18n="courses.filter_all">
+                            Todos
+                        </button>
+                        <button class="filter-tab" data-filter="iniciante" data-i18n="courses.filter_beginner">
+                            Iniciante
+                        </button>
+                        <button class="filter-tab" data-filter="intermediario" data-i18n="courses.filter_intermediate">
+                            Intermediário
+                        </button>
+                        <button class="filter-tab" data-filter="avancado" data-i18n="courses.filter_advanced">
+                            Avançado
+                        </button>
+                    </div>
+                    
+                    <div class="filters__tags">
+                        <button class="tag-filter" data-tag="python">Python</button>
+                        <button class="tag-filter" data-tag="datascience">Data Science</button>
+                        <button class="tag-filter" data-tag="latex">LaTeX</button>
+                        <button class="tag-filter" data-tag="gis">GIS</button>
+                        <button class="tag-filter" data-tag="ambiente">Ambiente</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Course Statistics -->
+        <section class="course-stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card__number" id="total-courses">3</div>
+                        <div class="stat-card__label" data-i18n="courses.stats_courses">Cursos Disponíveis</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__number" id="total-hours">80</div>
+                        <div class="stat-card__label" data-i18n="courses.stats_hours">Horas de Conteúdo</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__number" id="total-lessons">25+</div>
+                        <div class="stat-card__label" data-i18n="courses.stats_lessons">Aulas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__number" id="total-materials">50+</div>
+                        <div class="stat-card__label" data-i18n="courses.stats_materials">Materiais</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Course Catalog -->
+        <section class="course-catalog">
+            <div class="container">
+                <div class="course-grid" id="course-grid">
+                    <!-- Courses will be loaded here by JavaScript -->
+                </div>
+                
+                <!-- Loading State -->
+                <div class="loading" id="loading">
+                    <div class="loading__spinner"></div>
+                    <p data-i18n="courses.loading">Carregando cursos...</p>
+                </div>
+                
+                <!-- No Results -->
+                <div class="no-results" id="no-results" style="display: none;">
+                    <div class="no-results__icon">📚</div>
+                    <h3 class="no-results__title" data-i18n="courses.no_results_title">Nenhum curso encontrado</h3>
+                    <p class="no-results__description" data-i18n="courses.no_results_description">
+                        Tente ajustar os filtros ou termos de busca.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- External Data Lab CTA -->
+        <section class="external-datalab">
+            <div class="container">
+                <div class="datalab-cta">
+                    <div class="datalab-cta__content">
+                        <h2 class="datalab-cta__title" data-i18n="courses.external_datalab_title">
+                            Quer mais? Conheça nosso Data Lab completo
+                        </h2>
+                        <p class="datalab-cta__description" data-i18n="courses.external_datalab_description">
+                            Acesse nossa plataforma externa com cursos avançados, certificações e projetos práticos.
+                        </p>
+                        <a href="#" class="btn btn--primary" id="external-datalab-link" data-i18n="courses.external_datalab_button">
+                            Acessar Data Lab Externo
+                        </a>
+                    </div>
+                    <div class="datalab-cta__features">
+                        <ul class="feature-list">
+                            <li data-i18n="courses.external_feature_1">Certificados reconhecidos</li>
+                            <li data-i18n="courses.external_feature_2">Projetos com dados reais</li>
+                            <li data-i18n="courses.external_feature_3">Mentoria especializada</li>
+                            <li data-i18n="courses.external_feature_4">Comunidade ativa</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">MLEP</h3>
+                    <p class="footer__description">
+                        Machine Learning aplicado à Física Ambiental
+                    </p>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__subtitle" data-i18n="footer.quick_links">Links Rápidos</h4>
+                    <ul class="footer__links">
+                        <li><a href="/about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="/research" data-i18n="nav.research">Pesquisa</a></li>
+                        <li><a href="/publications" data-i18n="nav.publications">Publicações</a></li>
+                        <li><a href="/team" data-i18n="nav.team">Equipe</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__subtitle" data-i18n="footer.contact">Contato</h4>
+                    <p>Instituto de Física<br>
+                    Universidade Federal<br>
+                    contato@mlep.example.com</p>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__subtitle" data-i18n="footer.data_lab">Data Lab</h4>
+                    <p data-i18n="footer.data_lab_description">
+                        Cursos práticos de ML para ciências ambientais
+                    </p>
+                    <a href="#" class="footer__datalab-link" id="footer-datalab-link" data-i18n="footer.data_lab_link">
+                        Acessar Data Lab →
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p>&copy; 2024 MLEP. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/courses-catalog.js"></script>
+    <script>
+        // Authentication and User Management
+        class DataLabAuth {
+            constructor() {
+                this.user = null;
+                this.init();
+            }
+
+            async init() {
+                await this.checkAuthStatus();
+                this.setupUserInterface();
+                this.setupEventListeners();
+            }
+
+            async checkAuthStatus() {
+                try {
+                    const response = await fetch('/api/auth/status');
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.authenticated) {
+                            this.user = data.user;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error checking auth status:', error);
+                }
+            }
+
+            setupUserInterface() {
+                const userProfile = document.getElementById('user-profile');
+                const loginBtn = document.getElementById('login-btn');
+                const welcomeSection = document.getElementById('welcome-section');
+
+                if (this.user) {
+                    // Show user profile
+                    userProfile.style.display = 'flex';
+                    loginBtn.style.display = 'none';
+
+                    // Update user info
+                    document.getElementById('user-name').textContent = this.user.name;
+                    document.getElementById('user-email').textContent = this.user.email;
+
+                    // Set avatar
+                    const avatarImg = document.getElementById('user-avatar-img');
+                    const avatarText = document.getElementById('user-avatar-text');
+
+                    if (this.user.picture) {
+                        avatarImg.src = this.user.picture;
+                        avatarImg.style.display = 'block';
+                        avatarText.style.display = 'none';
+                    } else {
+                        // Use initials as avatar
+                        const initials = this.user.name.split(' ')
+                            .map(n => n[0])
+                            .join('')
+                            .toUpperCase()
+                            .substring(0, 2);
+                        avatarText.textContent = initials;
+                        avatarImg.style.display = 'none';
+                        avatarText.style.display = 'flex';
+                    }
+
+                    // Show welcome section
+                    welcomeSection.style.display = 'block';
+                    document.getElementById('welcome-user-name').textContent = this.user.name.split(' ')[0];
+
+                    // Load user progress (mock data for now)
+                    this.loadUserProgress();
+                } else {
+                    // Show login button
+                    userProfile.style.display = 'none';
+                    loginBtn.style.display = 'inline-flex';
+                    welcomeSection.style.display = 'none';
+                }
+            }
+
+            loadUserProgress() {
+                // Mock user progress data
+                document.getElementById('user-progress').textContent = '65%';
+                document.getElementById('user-courses').textContent = '3';
+                document.getElementById('user-certificates').textContent = '1';
+            }
+
+            setupEventListeners() {
+                // User menu toggle
+                const menuToggle = document.querySelector('.user-menu-toggle');
+                const menuDropdown = document.querySelector('.user-menu-dropdown');
+
+                if (menuToggle && menuDropdown) {
+                    menuToggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        menuDropdown.classList.toggle('show');
+                    });
+
+                    // Close menu when clicking outside
+                    document.addEventListener('click', () => {
+                        menuDropdown.classList.remove('show');
+                    });
+                }
+
+                // Welcome section buttons
+                const continueBtn = document.getElementById('continue-learning-btn');
+                const browseBtn = document.getElementById('browse-courses-btn');
+
+                if (continueBtn) {
+                    continueBtn.addEventListener('click', () => {
+                        // Scroll to courses or navigate to last course
+                        document.querySelector('.course-grid').scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                if (browseBtn) {
+                    browseBtn.addEventListener('click', () => {
+                        // Scroll to course filters
+                        document.querySelector('.course-filters').scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+            }
+        }
+
+        // Logout function
+        async function logout() {
+            try {
+                const response = await fetch('/logout', { method: 'POST' });
+                if (response.ok) {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Fallback: redirect anyway
+                window.location.href = '/login';
+            }
+        }
+
+        // Fetch with authentication check
+        async function fetchAuth(url, options = {}) {
+            try {
+                const response = await fetch(url, options);
+
+                // If unauthorized, redirect to login
+                if (response.status === 401) {
+                    window.location.href = `/login?next=${encodeURIComponent(window.location.pathname)}`;
+                    return null;
+                }
+
+                return response;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                throw error;
+            }
+        }
+
+        // Initialize authentication when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new DataLabAuth();
+        });
+    </script>
+</body>
+</html>

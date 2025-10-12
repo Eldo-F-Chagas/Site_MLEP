@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Curso | MLEP Data Lab</title>
+    <meta name="description" id="page-description" content="Curso do MLEP Data Lab">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/courses.css">
+    <link rel="stylesheet" href="/assets/css/course-page.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    
+    <!-- Schema.org markup for course -->
+    <script type="application/ld+json" id="course-schema">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "",
+        "description": "",
+        "provider": {
+            "@type": "Organization",
+            "name": "MLEP Data Lab"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__brand">
+                    <a href="/" class="logo">
+                        <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                        <span class="logo__text">MLEP</span>
+                    </a>
+                </div>
+                
+                <nav class="nav" aria-label="Navegação principal">
+                    <ul class="nav__list">
+                        <li><a href="/">Início</a></li>
+                        <li><a href="/about">Sobre</a></li>
+                        <li><a href="/research">Pesquisa</a></li>
+                        <li><a href="/publications">Publicações</a></li>
+                        <li><a href="/projects">Projetos</a></li>
+                        <li><a href="/team">Equipe</a></li>
+                        <li><a href="/news">Notícias</a></li>
+                        <li><a href="/cursos" class="nav__link--active">Cursos</a></li>
+                        <li><a href="/contact">Contato</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header__actions">
+                    <button class="theme-toggle" aria-label="Alternar tema">
+                        <span class="theme-toggle__icon">🌙</span>
+                    </button>
+                    <button class="lang-toggle" aria-label="Alternar idioma">
+                        <span class="lang-toggle__text">EN</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="main">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <div class="container">
+                <ol class="breadcrumb__list">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/cursos">Cursos</a></li>
+                    <li id="breadcrumb-course">Carregando...</li>
+                </ol>
+            </div>
+        </nav>
+        
+        <!-- Course Header -->
+        <section class="course-header">
+            <div class="container">
+                <div class="course-header__content">
+                    <div class="course-header__main">
+                        <div class="course-header__badge" id="course-level">Carregando...</div>
+                        <h1 class="course-header__title" id="course-title">Carregando curso...</h1>
+                        <p class="course-header__summary" id="course-summary">Carregando descrição...</p>
+                        
+                        <div class="course-header__meta">
+                            <div class="course-meta">
+                                <div class="course-meta__item">
+                                    <span class="course-meta__icon">⏱️</span>
+                                    <span id="course-hours">0h</span>
+                                </div>
+                                <div class="course-meta__item">
+                                    <span class="course-meta__icon">📚</span>
+                                    <span id="course-lessons">0 aulas</span>
+                                </div>
+                                <div class="course-meta__item">
+                                    <span class="course-meta__icon">📄</span>
+                                    <span id="course-materials">0 materiais</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="course-header__tags" id="course-tags">
+                            <!-- Tags will be loaded here -->
+                        </div>
+                        
+                        <div class="course-header__actions">
+                            <button class="btn btn--primary btn--large" id="start-course-btn">
+                                Começar Curso
+                            </button>
+                            <button class="btn btn--secondary btn--large" id="preview-btn">
+                                Preview Gratuito
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="course-header__sidebar">
+                        <div class="course-progress">
+                            <h3 class="course-progress__title">Seu Progresso</h3>
+                            <div class="progress-bar">
+                                <div class="progress-bar__fill" id="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="course-progress__text">
+                                <span id="progress-text">0% concluído</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Course Content -->
+        <section class="course-content">
+            <div class="container">
+                <div class="course-tabs">
+                    <nav class="tabs" role="tablist">
+                        <button class="tab tab--active" role="tab" data-tab="overview" aria-selected="true">
+                            Visão Geral
+                        </button>
+                        <button class="tab" role="tab" data-tab="lessons" aria-selected="false">
+                            Aulas
+                        </button>
+                        <button class="tab" role="tab" data-tab="forum" aria-selected="false">
+                            Fórum
+                        </button>
+                        <button class="tab" role="tab" data-tab="materials" aria-selected="false">
+                            Materiais
+                        </button>
+                    </nav>
+                    
+                    <!-- Overview Tab -->
+                    <div class="tab-content tab-content--active" id="overview-content" role="tabpanel">
+                        <div class="course-overview">
+                            <div class="course-overview__main">
+                                <div class="course-description">
+                                    <h2>Sobre o Curso</h2>
+                                    <div id="course-description">Carregando descrição...</div>
+                                </div>
+                                
+                                <div class="course-objectives">
+                                    <h2>O que você vai aprender</h2>
+                                    <ul id="course-objectives-list">
+                                        <li>Carregando objetivos...</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="course-overview__sidebar">
+                                <div class="course-stats">
+                                    <h3>Estatísticas do Curso</h3>
+                                    <div class="stats-list">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Módulos</span>
+                                            <span class="stat-value" id="modules-count">0</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Aulas</span>
+                                            <span class="stat-value" id="lessons-count">0</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Materiais</span>
+                                            <span class="stat-value" id="materials-count">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lessons Tab -->
+                    <div class="tab-content" id="lessons-content" role="tabpanel">
+                        <div class="course-modules" id="course-modules">
+                            <!-- Modules and lessons will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Forum Tab -->
+                    <div class="tab-content" id="forum-content" role="tabpanel">
+                        <div class="course-forum">
+                            <div class="forum-header">
+                                <h2>Fórum do Curso</h2>
+                                <button class="btn btn--primary" id="new-topic-btn">
+                                    Novo Tópico
+                                </button>
+                            </div>
+                            
+                            <div class="forum-topics" id="forum-topics">
+                                <!-- Forum topics will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Materials Tab -->
+                    <div class="tab-content" id="materials-content" role="tabpanel">
+                        <div class="course-materials">
+                            <div class="materials-header">
+                                <h2>Materiais do Curso</h2>
+                                <div class="materials-filters">
+                                    <select id="material-type-filter">
+                                        <option value="all">Todos os tipos</option>
+                                        <option value="pdf">PDF</option>
+                                        <option value="ipynb">Notebook</option>
+                                        <option value="csv">Dataset</option>
+                                        <option value="zip">Arquivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="materials-list" id="materials-list">
+                                <!-- Materials will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">MLEP</h3>
+                    <p class="footer__description">
+                        Machine Learning aplicado à Física Ambiental
+                    </p>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__subtitle">Links Rápidos</h4>
+                    <ul class="footer__links">
+                        <li><a href="/about">Sobre</a></li>
+                        <li><a href="/research">Pesquisa</a></li>
+                        <li><a href="/publications">Publicações</a></li>
+                        <li><a href="/team">Equipe</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__subtitle">Contato</h4>
+                    <p>Instituto de Física<br>
+                    Universidade Federal<br>
+                    contato@mlep.example.com</p>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__subtitle">Data Lab</h4>
+                    <p>Cursos práticos de ML para ciências ambientais</p>
+                    <a href="#" class="footer__datalab-link" id="footer-datalab-link">
+                        Acessar Data Lab →
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p>&copy; 2024 MLEP. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/course-page.js"></script>
+</body>
+</html>

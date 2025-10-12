@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - MLEP</title>
+    <meta name="description" content="Conheça o MLEP - Grupo de pesquisa em Machine Learning Aplicado à Física Ambiental">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Main navigation">
+            <div class="nav__brand">
+                <a href="/" class="nav__logo" aria-label="MLEP Home">
+                    <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                    <span class="nav__logo-text">MLEP</span>
+                </a>
+            </div>
+
+            <button class="nav__toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+            </button>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/" class="nav__link" data-i18n="nav.home">Início</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/about" class="nav__link nav__link--active" data-i18n="nav.about">Sobre</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/research" class="nav__link" data-i18n="nav.research">Pesquisa</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/publications" class="nav__link" data-i18n="nav.publications">Publicações</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/projects" class="nav__link" data-i18n="nav.projects">Projetos</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/team" class="nav__link" data-i18n="nav.team">Equipe</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/news" class="nav__link" data-i18n="nav.news">Notícias</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/contact" class="nav__link" data-i18n="nav.contact">Contato</a>
+                    </li>
+                    <li class="nav__item nav__item--highlight">
+                        <a href="#" class="nav__link nav__link--cta" id="datalab-link" data-i18n="nav.datalab">Data Lab</a>
+                    </li>
+                </ul>
+
+                <div class="nav__controls">
+                    <button class="nav__control" id="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="icon icon--sun" aria-hidden="true">☀️</span>
+                        <span class="icon icon--moon" aria-hidden="true">🌙</span>
+                    </button>
+                    <button class="nav__control" id="lang-toggle" aria-label="Change language">
+                        <span class="lang-text">PT</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Page Header -->
+        <section class="section section--page-header">
+            <div class="container">
+                <h1 class="section__title" data-i18n="about.title">Sobre o MLEP</h1>
+                <p class="section__subtitle">
+                    Conheça nossa missão, visão e história no desenvolvimento de soluções de machine learning para física ambiental.
+                </p>
+            </div>
+        </section>
+
+        <!-- Mission, Vision, Values -->
+        <section class="section">
+            <div class="container">
+                <div class="grid grid--3">
+                    <div class="card">
+                        <div class="card__header">
+                            <h2 class="card__title" data-i18n="about.mission">Missão</h2>
+                        </div>
+                        <div class="card__content">
+                            <p>
+                                Desenvolver e aplicar técnicas avançadas de machine learning para compreender, 
+                                modelar e prever fenômenos ambientais, contribuindo para a proteção do meio ambiente 
+                                e o desenvolvimento sustentável.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h2 class="card__title" data-i18n="about.vision">Visão</h2>
+                        </div>
+                        <div class="card__content">
+                            <p>
+                                Ser um centro de referência internacional em machine learning aplicado à física ambiental, 
+                                formando pesquisadores de excelência e desenvolvendo soluções inovadoras para os 
+                                desafios ambientais globais.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__header">
+                            <h2 class="card__title" data-i18n="about.values">Valores</h2>
+                        </div>
+                        <div class="card__content">
+                            <ul>
+                                <li>Excelência científica</li>
+                                <li>Colaboração interdisciplinar</li>
+                                <li>Transparência e reprodutibilidade</li>
+                                <li>Impacto social e ambiental</li>
+                                <li>Formação de recursos humanos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History -->
+        <section class="section section--history">
+            <div class="container">
+                <h2 class="section__title" data-i18n="about.history">Nossa História</h2>
+                <div class="timeline">
+                    <div class="timeline__item">
+                        <div class="timeline__year">2020</div>
+                        <div class="timeline__content">
+                            <h3>Fundação do Grupo</h3>
+                            <p>O MLEP foi fundado com o objetivo de aplicar técnicas de inteligência artificial aos problemas ambientais.</p>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__year">2021</div>
+                        <div class="timeline__content">
+                            <h3>Primeiros Projetos</h3>
+                            <p>Início dos primeiros projetos de pesquisa em modelagem climática e qualidade do ar.</p>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__year">2022</div>
+                        <div class="timeline__content">
+                            <h3>Expansão da Equipe</h3>
+                            <p>Crescimento significativo da equipe com a chegada de novos pesquisadores e estudantes.</p>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__year">2023</div>
+                        <div class="timeline__content">
+                            <h3>Parcerias Internacionais</h3>
+                            <p>Estabelecimento de colaborações com instituições de pesquisa internacionais.</p>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__year">2024</div>
+                        <div class="timeline__content">
+                            <h3>Data Lab</h3>
+                            <p>Lançamento do programa Data Lab para capacitação em machine learning ambiental.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partnerships -->
+        <section class="section section--partnerships">
+            <div class="container">
+                <h2 class="section__title" data-i18n="about.partnerships">Parcerias</h2>
+                <div class="partners-grid">
+                    <div class="partner-card">
+                        <h3>Universidades</h3>
+                        <ul>
+                            <li>Universidade Federal do Rio de Janeiro</li>
+                            <li>Universidade de São Paulo</li>
+                            <li>Massachusetts Institute of Technology</li>
+                            <li>University of Oxford</li>
+                        </ul>
+                    </div>
+                    <div class="partner-card">
+                        <h3>Institutos de Pesquisa</h3>
+                        <ul>
+                            <li>Instituto Nacional de Pesquisas Espaciais (INPE)</li>
+                            <li>Centro de Previsão de Tempo e Estudos Climáticos (CPTEC)</li>
+                            <li>NASA Goddard Space Flight Center</li>
+                            <li>European Centre for Medium-Range Weather Forecasts</li>
+                        </ul>
+                    </div>
+                    <div class="partner-card">
+                        <h3>Agências de Fomento</h3>
+                        <ul>
+                            <li>CNPq - Conselho Nacional de Desenvolvimento Científico e Tecnológico</li>
+                            <li>CAPES - Coordenação de Aperfeiçoamento de Pessoal de Nível Superior</li>
+                            <li>FAPESP - Fundação de Amparo à Pesquisa do Estado de São Paulo</li>
+                            <li>National Science Foundation (NSF)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.about_mlep">Sobre o MLEP</h3>
+                    <p class="footer__text">
+                        Grupo de pesquisa dedicado à aplicação de machine learning em física ambiental,
+                        desenvolvendo soluções inovadoras para compreender e proteger o meio ambiente.
+                    </p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.quick_links">Links Rápidos</h3>
+                    <ul class="footer__links">
+                        <li><a href="/about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="/research" data-i18n="nav.research">Pesquisa</a></li>
+                        <li><a href="/publications" data-i18n="nav.publications">Publicações</a></li>
+                        <li><a href="/team" data-i18n="nav.team">Equipe</a></li>
+                        <li><a href="/contact" data-i18n="nav.contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.contact_info">Informações de Contato</h3>
+                    <div class="footer__contact">
+                        <p>📧 contato@mlep.example.com</p>
+                        <p>📍 Universidade Federal, Campus Principal</p>
+                        <p>🌐 <a href="#" id="footer-datalab-link" data-i18n="nav.datalab">Data Lab</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright" data-i18n="footer.copyright">
+                    © 2024 MLEP - Machine Learning Applied to Environmental Physics. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

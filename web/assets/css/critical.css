@@ -1,0 +1,177 @@
+/* Critical CSS - Above the fold styles */
+/* This file contains only the essential styles needed for initial page render */
+
+/* CSS Variables - Critical subset */
+:root {
+  /* Colors - Essential only */
+  --color-primary: #2563eb;
+  --color-text: #1f2937;
+  --color-background: #ffffff;
+  --color-border: #e5e7eb;
+  
+  /* Typography - Essential */
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Spacing - Essential */
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  
+  /* Layout */
+  --container-max-width: 1200px;
+  --header-height: 80px;
+}
+
+/* Dark theme - Critical variables */
+[data-theme="dark"] {
+  --color-text: #f9fafb;
+  --color-background: #111827;
+  --color-border: #374151;
+}
+
+/* Reset - Critical only */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  font-family: var(--font-family-sans);
+}
+
+body {
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography - Critical */
+h1, h2, h3 {
+  margin: 0 0 var(--space-4) 0;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+h1 { font-size: var(--font-size-2xl); }
+h2 { font-size: var(--font-size-xl); }
+h3 { font-size: var(--font-size-lg); }
+
+p {
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* Layout - Critical */
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* Header - Critical styles */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Navigation - Critical */
+.nav__list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--space-6);
+}
+
+.nav__list a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+  transition: color 0.2s ease;
+}
+
+.nav__list a:hover {
+  color: var(--color-primary);
+}
+
+/* Skip link - Accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-primary);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 10000;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Loading states - Critical */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Responsive - Critical breakpoints */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 60px;
+  }
+  
+  .container {
+    padding: 0 var(--space-4);
+  }
+  
+  .nav__list {
+    display: none; /* Mobile nav handled by JS */
+  }
+  
+  h1 { font-size: var(--font-size-xl); }
+  h2 { font-size: var(--font-size-lg); }
+}
+
+/* Print - Critical */
+@media print {
+  .header, .nav {
+    display: none;
+  }
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MLEP</title>
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/auth.css">
+</head>
+<body class="auth-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/" class="logo-link">
+                        <span class="logo-text">MLEP</span>
+                        <span class="logo-subtitle">Machine Learning Applied to Environmental Physics</span>
+                    </a>
+                </div>
+                <nav class="nav">
+                    <a href="/" class="nav-link">Início</a>
+                    <a href="/about" class="nav-link">Sobre</a>
+                    <a href="/register" class="nav-link">Registrar</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1 class="auth-title">Fazer Login</h1>
+                    <p class="auth-subtitle">Entre para acessar os cursos do Data Lab</p>
+                </div>
+
+                <!-- Error Message -->
+                <div id="error-message" class="error-message" style="display: none;"></div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form" action="/auth/login" method="POST">
+                    <input type="hidden" name="next" id="next-input">
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            required
+                            placeholder="Digite seu email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Senha</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            required
+                            placeholder="Digite sua senha"
+                        >
+                    </div>
+
+                    <button type="submit" class="auth-button" id="login-button">
+                        <span class="button-text">Entrar</span>
+                        <div class="button-loading" style="display: none;">
+                            <div class="spinner"></div>
+                            <span>Entrando...</span>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Register Link -->
+                <div class="auth-footer">
+                    <p>Não tem uma conta? <a href="/register" class="auth-link">Registre-se</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="/assets/js/main.js"></script>
+    <script>
+        class LoginPage {
+            constructor() {
+                this.form = document.getElementById('login-form');
+                this.loginButton = document.getElementById('login-button');
+                this.errorMessage = document.getElementById('error-message');
+                
+                this.init();
+            }
+
+            init() {
+                this.handleURLParams();
+                this.setupFormSubmission();
+            }
+
+            handleURLParams() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const error = urlParams.get('error');
+                const next = urlParams.get('next') || '/cursos';
+
+                // Set next URL
+                document.getElementById('next-input').value = next;
+
+                // Show error if present
+                if (error) {
+                    this.showError(decodeURIComponent(error));
+                }
+            }
+
+            setupFormSubmission() {
+                this.form.addEventListener('submit', (e) => {
+                    this.setLoading(true);
+                    this.hideError();
+                });
+            }
+
+            setLoading(loading) {
+                const buttonText = this.loginButton.querySelector('.button-text');
+                const buttonLoading = this.loginButton.querySelector('.button-loading');
+                
+                if (loading) {
+                    buttonText.style.display = 'none';
+                    buttonLoading.style.display = 'flex';
+                    this.loginButton.disabled = true;
+                } else {
+                    buttonText.style.display = 'block';
+                    buttonLoading.style.display = 'none';
+                    this.loginButton.disabled = false;
+                }
+            }
+
+            showError(message) {
+                this.errorMessage.textContent = message;
+                this.errorMessage.style.display = 'block';
+            }
+
+            hideError() {
+                this.errorMessage.style.display = 'none';
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new LoginPage();
+        });
+    </script>
+</body>
+</html>

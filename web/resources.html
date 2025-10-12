@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - MLEP</title>
+    <meta name="description" content="Recursos, datasets e ferramentas do MLEP - Machine Learning Aplicado à Física Ambiental">
+    <meta name="keywords" content="recursos, datasets, ferramentas, código, repositórios, machine learning, física ambiental">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mlep.example.com/resources">
+    <meta property="og:title" content="Recursos - MLEP">
+    <meta property="og:description" content="Acesse nossos datasets, ferramentas e recursos para pesquisa em Machine Learning Aplicado à Física Ambiental">
+    <meta property="og:image" content="/assets/img/og-resources.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mlep.example.com/resources">
+    <meta property="twitter:title" content="Recursos - MLEP">
+    <meta property="twitter:description" content="Acesse nossos datasets, ferramentas e recursos para pesquisa em Machine Learning Aplicado à Física Ambiental">
+    <meta property="twitter:image" content="/assets/img/og-resources.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/resources.css">
+
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/assets/js/main.js" as="script">
+    <link rel="preload" href="/assets/js/i18n.js" as="script">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link" data-i18n="common.skip_to_content">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Main navigation">
+            <div class="nav__brand">
+                <a href="/" class="nav__logo" aria-label="MLEP Home">
+                    <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                    <span class="nav__logo-text">MLEP</span>
+                </a>
+            </div>
+
+            <button class="nav__toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+            </button>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/" class="nav__link" data-i18n="nav.home">Início</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/about" class="nav__link" data-i18n="nav.about">Sobre</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/research" class="nav__link" data-i18n="nav.research">Pesquisa</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/publications" class="nav__link" data-i18n="nav.publications">Publicações</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/projects" class="nav__link" data-i18n="nav.projects">Projetos</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/team" class="nav__link" data-i18n="nav.team">Equipe</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/news" class="nav__link" data-i18n="nav.news">Notícias</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/contact" class="nav__link" data-i18n="nav.contact">Contato</a>
+                    </li>
+                    <li class="nav__item nav__item--highlight">
+                        <a href="#" class="nav__link nav__link--cta" id="datalab-link" data-i18n="nav.datalab">Data Lab</a>
+                    </li>
+                </ul>
+
+                <div class="nav__controls">
+                    <button class="nav__control" id="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="icon icon--sun" aria-hidden="true">☀️</span>
+                        <span class="icon icon--moon" aria-hidden="true">🌙</span>
+                    </button>
+                    <button class="nav__control" id="lang-toggle" aria-label="Change language">
+                        <span class="lang-text">PT</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-header__title" data-i18n="nav.resources">Recursos</h1>
+                <p class="page-header__subtitle">
+                    Acesse nossos datasets, ferramentas, códigos e recursos para pesquisa em Machine Learning aplicado à Física Ambiental.
+                </p>
+            </div>
+        </section>
+
+        <!-- Resource Categories -->
+        <section class="section section--categories">
+            <div class="container">
+                <div class="resource-categories">
+                    <div class="category-card" data-category="datasets">
+                        <div class="category-card__icon">📊</div>
+                        <h3 class="category-card__title">Datasets</h3>
+                        <p class="category-card__description">
+                            Conjuntos de dados ambientais processados e prontos para análise
+                        </p>
+                        <div class="category-card__count" id="datasets-count">0 datasets</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="tools">
+                        <div class="category-card__icon">🛠️</div>
+                        <h3 class="category-card__title">Ferramentas</h3>
+                        <p class="category-card__description">
+                            Bibliotecas e ferramentas desenvolvidas pelo grupo
+                        </p>
+                        <div class="category-card__count" id="tools-count">0 ferramentas</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="notebooks">
+                        <div class="category-card__icon">📓</div>
+                        <h3 class="category-card__title">Notebooks</h3>
+                        <p class="category-card__description">
+                            Jupyter notebooks com exemplos e tutoriais
+                        </p>
+                        <div class="category-card__count" id="notebooks-count">0 notebooks</div>
+                    </div>
+                    
+                    <div class="category-card" data-category="visualizations">
+                        <div class="category-card__icon">📈</div>
+                        <h3 class="category-card__title">Visualizações</h3>
+                        <p class="category-card__description">
+                            Dashboards e visualizações interativas
+                        </p>
+                        <div class="category-card__count" id="viz-count">0 visualizações</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Resources -->
+        <section class="section section--featured">
+            <div class="container">
+                <h2 class="section__title">Recursos em Destaque</h2>
+                <div class="featured-resources" id="featured-resources">
+                    <!-- Featured resources will be loaded here -->
+                    <div class="loading" data-i18n="common.loading">Carregando...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Visualizations -->
+        <section class="section section--visualizations">
+            <div class="container">
+                <h2 class="section__title">Visualizações Interativas</h2>
+                <div class="visualizations-grid">
+                    <div class="viz-card">
+                        <h3 class="viz-card__title">Estatísticas do Grupo</h3>
+                        <div class="viz-card__content">
+                            <canvas id="group-stats-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="viz-card">
+                        <h3 class="viz-card__title">Publicações por Ano</h3>
+                        <div class="viz-card__content">
+                            <canvas id="publications-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="viz-card">
+                        <h3 class="viz-card__title">Áreas de Pesquisa</h3>
+                        <div class="viz-card__content">
+                            <canvas id="research-areas-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="viz-card">
+                        <h3 class="viz-card__title">Status dos Projetos</h3>
+                        <div class="viz-card__content">
+                            <canvas id="projects-status-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resource Filters -->
+        <section class="section section--filters">
+            <div class="container">
+                <div class="resource-filters">
+                    <div class="filter-tabs">
+                        <button class="filter-tab filter-tab--active" data-filter="all">
+                            Todos os Recursos
+                        </button>
+                        <button class="filter-tab" data-filter="datasets">
+                            Datasets
+                        </button>
+                        <button class="filter-tab" data-filter="tools">
+                            Ferramentas
+                        </button>
+                        <button class="filter-tab" data-filter="notebooks">
+                            Notebooks
+                        </button>
+                        <button class="filter-tab" data-filter="visualizations">
+                            Visualizações
+                        </button>
+                    </div>
+                    
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            class="search-input" 
+                            placeholder="Buscar recursos..."
+                        >
+                        <button class="search-button" id="search-button" aria-label="Search">
+                            <span class="search-icon">🔍</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources List -->
+        <section class="section section--resources-list">
+            <div class="container">
+                <div class="resources-grid" id="resources-grid">
+                    <!-- Resources will be loaded here -->
+                    <div class="loading" data-i18n="common.loading">Carregando...</div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more-container" id="load-more-container" style="display: none;">
+                    <button class="btn btn--secondary" id="load-more-btn" data-i18n="common.show_more">Carregar mais</button>
+                </div>
+
+                <!-- No Results Message -->
+                <div class="no-results" id="no-results" style="display: none;">
+                    <div class="no-results__icon">📚</div>
+                    <h3 class="no-results__title">Nenhum recurso encontrado</h3>
+                    <p class="no-results__message">
+                        Tente ajustar os filtros ou termos de busca para encontrar o que procura.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Lab Section -->
+        <section class="section section--datalab">
+            <div class="container">
+                <div class="datalab-promo">
+                    <div class="datalab-promo__content">
+                        <h2 class="datalab-promo__title">Data Lab</h2>
+                        <p class="datalab-promo__description">
+                            Aprenda a usar nossos recursos e ferramentas através dos cursos práticos do Data Lab. 
+                            Oferecemos treinamento hands-on em machine learning para dados ambientais.
+                        </p>
+                        <ul class="datalab-promo__features">
+                            <li>Tutoriais práticos com nossos datasets</li>
+                            <li>Exemplos de uso das nossas ferramentas</li>
+                            <li>Casos de estudo reais</li>
+                            <li>Suporte da equipe MLEP</li>
+                        </ul>
+                    </div>
+                    <div class="datalab-promo__actions">
+                        <a href="#" class="btn btn--primary" id="datalab-cta">Acessar Data Lab</a>
+                        <a href="/contact" class="btn btn--secondary">Solicitar Treinamento</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.about_mlep">Sobre o MLEP</h3>
+                    <p class="footer__text">
+                        Grupo de pesquisa dedicado à aplicação de machine learning em física ambiental,
+                        desenvolvendo soluções inovadoras para compreender e proteger o meio ambiente.
+                    </p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.quick_links">Links Rápidos</h3>
+                    <ul class="footer__links">
+                        <li><a href="/about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="/research" data-i18n="nav.research">Pesquisa</a></li>
+                        <li><a href="/publications" data-i18n="nav.publications">Publicações</a></li>
+                        <li><a href="/team" data-i18n="nav.team">Equipe</a></li>
+                        <li><a href="/contact" data-i18n="nav.contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.contact_info">Informações de Contato</h3>
+                    <div class="footer__contact">
+                        <p>📧 contato@mlep.example.com</p>
+                        <p>📍 Universidade Federal, Campus Principal</p>
+                        <p>🌐 <a href="#" id="footer-datalab-link" data-i18n="nav.datalab">Data Lab</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright" data-i18n="footer.copyright">
+                    © 2024 MLEP - Machine Learning Applied to Environmental Physics. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/resources.js"></script>
+</body>
+</html>

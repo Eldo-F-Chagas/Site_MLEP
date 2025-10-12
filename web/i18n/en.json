@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "research": "Research",
+    "publications": "Publications",
+    "projects": "Projects",
+    "team": "Team",
+    "news": "News",
+    "events": "Events",
+    "resources": "Resources",
+    "contact": "Contact",
+    "courses": "Courses",
+    "datalab": "Data Lab Courses"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "download": "Download",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "results": "results",
+    "no_results": "No results found",
+    "skip_to_content": "Skip to main content"
+  },
+  "home": {
+    "title": "MLEP - Machine Learning Applied to Environmental Physics",
+    "subtitle": "Advanced research in artificial intelligence for environmental sciences",
+    "hero_cta": "Explore our research",
+    "featured_research": "Featured Research",
+    "latest_publications": "Latest Publications",
+    "current_projects": "Current Projects",
+    "recent_news": "Recent News"
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to main content",
+    "main_navigation": "Main navigation",
+    "search": "Search",
+    "language_toggle": "Toggle language",
+    "theme_toggle": "Toggle theme"
+  }
+}

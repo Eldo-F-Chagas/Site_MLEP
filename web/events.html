@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos - MLEP</title>
+    <meta name="description" content="Eventos e atividades do MLEP - Machine Learning Aplicado à Física Ambiental">
+    <meta name="keywords" content="eventos, workshops, conferências, seminários, machine learning, física ambiental">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mlep.example.com/events">
+    <meta property="og:title" content="Eventos - MLEP">
+    <meta property="og:description" content="Participe dos nossos eventos e atividades em Machine Learning Aplicado à Física Ambiental">
+    <meta property="og:image" content="/assets/img/og-events.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mlep.example.com/events">
+    <meta property="twitter:title" content="Eventos - MLEP">
+    <meta property="twitter:description" content="Participe dos nossos eventos e atividades em Machine Learning Aplicado à Física Ambiental">
+    <meta property="twitter:image" content="/assets/img/og-events.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/global.css">
+    <link rel="stylesheet" href="/assets/css/layout.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/events.css">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/assets/js/main.js" as="script">
+    <link rel="preload" href="/assets/js/i18n.js" as="script">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link" data-i18n="common.skip_to_content">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Main navigation">
+            <div class="nav__brand">
+                <a href="/" class="nav__logo" aria-label="MLEP Home">
+                    <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                    <span class="nav__logo-text">MLEP</span>
+                </a>
+            </div>
+
+            <button class="nav__toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+                <span class="nav__toggle-line"></span>
+            </button>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/" class="nav__link" data-i18n="nav.home">Início</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/about" class="nav__link" data-i18n="nav.about">Sobre</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/research" class="nav__link" data-i18n="nav.research">Pesquisa</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/publications" class="nav__link" data-i18n="nav.publications">Publicações</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/projects" class="nav__link" data-i18n="nav.projects">Projetos</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/team" class="nav__link" data-i18n="nav.team">Equipe</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/news" class="nav__link" data-i18n="nav.news">Notícias</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/contact" class="nav__link" data-i18n="nav.contact">Contato</a>
+                    </li>
+                    <li class="nav__item nav__item--highlight">
+                        <a href="#" class="nav__link nav__link--cta" id="datalab-link" data-i18n="nav.datalab">Data Lab</a>
+                    </li>
+                </ul>
+
+                <div class="nav__controls">
+                    <button class="nav__control" id="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="icon icon--sun" aria-hidden="true">☀️</span>
+                        <span class="icon icon--moon" aria-hidden="true">🌙</span>
+                    </button>
+                    <button class="nav__control" id="lang-toggle" aria-label="Change language">
+                        <span class="lang-text">PT</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-header__title" data-i18n="nav.events">Eventos</h1>
+                <p class="page-header__subtitle">
+                    Participe dos nossos workshops, seminários e conferências sobre Machine Learning aplicado à Física Ambiental.
+                </p>
+            </div>
+        </section>
+
+        <!-- Event Filters -->
+        <section class="section section--filters">
+            <div class="container">
+                <div class="event-filters">
+                    <div class="filter-tabs">
+                        <button class="filter-tab filter-tab--active" data-filter="all">
+                            Todos os Eventos
+                        </button>
+                        <button class="filter-tab" data-filter="upcoming">
+                            Próximos
+                        </button>
+                        <button class="filter-tab" data-filter="past">
+                            Passados
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Events -->
+        <section class="section section--upcoming" id="upcoming-section">
+            <div class="container">
+                <h2 class="section__title">Próximos Eventos</h2>
+                <div class="events-grid" id="upcoming-events">
+                    <!-- Upcoming events will be loaded here -->
+                    <div class="loading" data-i18n="common.loading">Carregando...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Past Events -->
+        <section class="section section--past" id="past-section">
+            <div class="container">
+                <h2 class="section__title">Eventos Passados</h2>
+                <div class="events-list" id="past-events">
+                    <!-- Past events will be loaded here -->
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="load-more-container" id="load-more-container" style="display: none;">
+                    <button class="btn btn--secondary" id="load-more-btn" data-i18n="common.show_more">Carregar mais</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Calendar -->
+        <section class="section section--calendar">
+            <div class="container">
+                <h2 class="section__title">Calendário de Eventos</h2>
+                <div class="calendar-container">
+                    <div class="calendar" id="event-calendar">
+                        <!-- Calendar will be rendered here -->
+                        <div class="calendar-placeholder">
+                            <p>Calendário de eventos será carregado aqui</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subscribe to Events -->
+        <section class="section section--subscribe">
+            <div class="container">
+                <div class="event-subscribe">
+                    <div class="event-subscribe__content">
+                        <h2 class="event-subscribe__title">Fique por Dentro dos Eventos</h2>
+                        <p class="event-subscribe__description">
+                            Inscreva-se na nossa newsletter para receber notificações sobre novos eventos, 
+                            workshops e oportunidades de participação.
+                        </p>
+                    </div>
+                    <div class="event-subscribe__actions">
+                        <a href="/contact#newsletter" class="btn btn--primary">Inscrever-se na Newsletter</a>
+                        <a href="/contact" class="btn btn--secondary">Propor um Evento</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- No Events Message -->
+        <div class="no-results" id="no-events" style="display: none;">
+            <div class="no-results__icon">📅</div>
+            <h3 class="no-results__title">Nenhum evento encontrado</h3>
+            <p class="no-results__message">
+                Não há eventos programados no momento. Volte em breve para conferir nossas próximas atividades.
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.about_mlep">Sobre o MLEP</h3>
+                    <p class="footer__text">
+                        Grupo de pesquisa dedicado à aplicação de machine learning em física ambiental,
+                        desenvolvendo soluções inovadoras para compreender e proteger o meio ambiente.
+                    </p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.quick_links">Links Rápidos</h3>
+                    <ul class="footer__links">
+                        <li><a href="/about" data-i18n="nav.about">Sobre</a></li>
+                        <li><a href="/research" data-i18n="nav.research">Pesquisa</a></li>
+                        <li><a href="/publications" data-i18n="nav.publications">Publicações</a></li>
+                        <li><a href="/team" data-i18n="nav.team">Equipe</a></li>
+                        <li><a href="/contact" data-i18n="nav.contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title" data-i18n="footer.contact_info">Informações de Contato</h3>
+                    <div class="footer__contact">
+                        <p>📧 contato@mlep.example.com</p>
+                        <p>📍 Universidade Federal, Campus Principal</p>
+                        <p>🌐 <a href="#" id="footer-datalab-link" data-i18n="nav.datalab">Data Lab</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copyright" data-i18n="footer.copyright">
+                    © 2024 MLEP - Machine Learning Applied to Environmental Physics. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/events.js"></script>
+</body>
+</html>
