@@ -83,6 +83,7 @@ class MLEPApp {
     this.setupThemeToggle();
     this.setupMobileNavigation();
     this.setupSmoothScrolling();
+    this.setupRevealAnimations();
     this.setupFormValidation();
   }
 
@@ -308,6 +309,77 @@ class MLEPApp {
         });
       }
     });
+  }
+
+  setupRevealAnimations() {
+    const selector = [
+      '.page-header__content',
+      '.section--page-header .container',
+      '.section__title',
+      '.pillar',
+      '.card',
+      '.publication-card',
+      '.publication-item',
+      '.project-card',
+      '.news-card',
+      '.news-item',
+      '.research-area',
+      '.member-card',
+      '.event-card',
+      '.resource-item',
+      '.category-card',
+      '.viz-card',
+      '.stat-card',
+      '.stat-item',
+      '.team-stat',
+      '.course-card',
+      '.module',
+      '.newsletter-card',
+      '.datalab-promo',
+      '.datalab-cta'
+    ].join(',');
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const observed = new WeakSet();
+
+    const reveal = (element) => {
+      element.classList.add('is-visible');
+    };
+
+    const observer = !reduceMotion && 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries, currentObserver) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            reveal(entry.target);
+            currentObserver.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+      : null;
+
+    const register = (root) => {
+      if (!root?.querySelectorAll) return;
+      const elements = [];
+      if (root.matches?.(selector)) elements.push(root);
+      elements.push(...root.querySelectorAll(selector));
+
+      elements.forEach((element) => {
+        if (observed.has(element)) return;
+        observed.add(element);
+        element.classList.add('reveal-ready');
+        if (observer) observer.observe(element);
+        else reveal(element);
+      });
+    };
+
+    register(document);
+
+    const contentObserver = new MutationObserver((records) => {
+      records.forEach((record) => {
+        record.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) register(node);
+        });
+      });
+    });
+    contentObserver.observe(document.body, { childList: true, subtree: true });
   }
 
   // Form Validation

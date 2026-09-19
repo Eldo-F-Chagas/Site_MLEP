@@ -12,14 +12,14 @@
     <meta property="og:url" content="https://eldo-f-chagas.github.io/Site_MLEP/">
     <meta property="og:title" content="MLEP - Machine Learning Applied to Environmental Physics">
     <meta property="og:description" content="IA para entender e proteger o meio ambiente">
-    <meta property="og:image" content="https://eldo-f-chagas.github.io/Site_MLEP/assets/img/logo/mlep-mark.svg">
+    <meta property="og:image" content="https://eldo-f-chagas.github.io/Site_MLEP/assets/img/hero/mlep-environmental-intelligence-v2.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://eldo-f-chagas.github.io/Site_MLEP/">
     <meta property="twitter:title" content="MLEP - Machine Learning Applied to Environmental Physics">
     <meta property="twitter:description" content="IA para entender e proteger o meio ambiente">
-    <meta property="twitter:image" content="https://eldo-f-chagas.github.io/Site_MLEP/assets/img/logo/mlep-mark.svg">
+    <meta property="twitter:image" content="https://eldo-f-chagas.github.io/Site_MLEP/assets/img/hero/mlep-environmental-intelligence-v2.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/assets/img/logo/mlep-mark.svg">
@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="/assets/css/layout.css">
     <link rel="stylesheet" href="/assets/css/components.css">
     <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/professional.css">
 
     <!-- Preload critical resources -->
     <link rel="preload" href="/assets/js/main.js" as="script">
@@ -107,6 +108,7 @@
             </div>
             <div class="container">
                 <div class="hero__content">
+                    <p class="hero__eyebrow" data-i18n="home.hero_eyebrow">Pesquisa • Dados • Impacto</p>
                     <h1 id="hero-title" class="hero__title" data-i18n="home.hero_title">
                         IA para entender e proteger o meio ambiente
                     </h1>
@@ -117,6 +119,11 @@
                         <a href="/about" class="btn btn--primary" data-i18n="home.cta_learn">Conheça o MLEP</a>
                         <a href="#" class="btn btn--secondary" id="hero-datalab-link" data-i18n="home.cta_datalab">Cursos Data Lab</a>
                     </div>
+                    <ul class="hero__signals" aria-label="Áreas de atuação do MLEP">
+                        <li data-i18n="home.signal_modeling">Modelagem preditiva</li>
+                        <li data-i18n="home.signal_geospatial">Dados geoespaciais</li>
+                        <li data-i18n="home.signal_open_science">Ciência aberta</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -124,24 +131,37 @@
         <!-- What We Do Section -->
         <section class="section section--what-we-do" aria-labelledby="what-we-do-title">
             <div class="container">
+                <p class="section__eyebrow" data-i18n="home.practice_eyebrow">Atuação interdisciplinar</p>
                 <h2 id="what-we-do-title" class="section__title" data-i18n="home.what_we_do">O que fazemos</h2>
                 <div class="pillars">
                     <div class="pillar">
-                        <div class="pillar__icon">🧠</div>
+                        <span class="pillar__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9.5 4.5A3 3 0 0 0 5 7.1 3.5 3.5 0 0 0 5.5 14a3 3 0 0 0 4 4.5M14.5 4.5A3 3 0 0 1 19 7.1a3.5 3.5 0 0 1-.5 6.9 3 3 0 0 1-4 4.5M12 3v18M8 9h4M12 15h4"/>
+                            </svg>
+                        </span>
                         <h3 class="pillar__title" data-i18n="home.pillar_modeling">Modelagem</h3>
                         <p class="pillar__description">
                             Desenvolvemos modelos de machine learning para compreender processos ambientais complexos.
                         </p>
                     </div>
                     <div class="pillar">
-                        <div class="pillar__icon">🌍</div>
+                        <span class="pillar__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+                            </svg>
+                        </span>
                         <h3 class="pillar__title" data-i18n="home.pillar_data">Dados Ambientais</h3>
                         <p class="pillar__description">
                             Analisamos grandes volumes de dados ambientais de satélites, sensores e simulações.
                         </p>
                     </div>
                     <div class="pillar">
-                        <div class="pillar__icon">🚀</div>
+                        <span class="pillar__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 16.5 7.5 13l3.5 3.5-3.5 3.5L4 20v-3.5Z"/><path d="M10 14c2.5-6.5 6-9 10-10 0 4-1.5 8.5-8 11"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="m8.5 11-3-.5L4 12l3 1.5M13 15.5l.5 3L12 20l-1.5-3"/>
+                            </svg>
+                        </span>
                         <h3 class="pillar__title" data-i18n="home.pillar_applications">Aplicações</h3>
                         <p class="pillar__description">
                             Criamos soluções práticas para monitoramento e proteção do meio ambiente.
