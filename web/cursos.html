@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/assets/css/courses.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/img/logo/mlep-mark.svg">
     
     <!-- Schema.org markup for courses -->
     <script type="application/ld+json">
@@ -22,7 +22,7 @@
         "@type": "EducationalOrganization",
         "name": "MLEP Data Lab",
         "description": "Cursos de Machine Learning aplicado à Física Ambiental",
-        "url": "https://mlep.example.com/cursos"
+        "url": "https://eldo-f-chagas.github.io/Site_MLEP/cursos"
     }
     </script>
 </head>
@@ -46,7 +46,7 @@
             <div class="header__content">
                 <div class="header__brand">
                     <a href="/" class="logo">
-                        <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                        <img src="/assets/img/logo/mlep-mark.svg" alt="MLEP Logo" width="40" height="40">
                         <span class="logo__text">MLEP</span>
                     </a>
                 </div>
@@ -69,7 +69,7 @@
                     <!-- User Profile -->
                     <div class="user-profile" id="user-profile" style="display: none;">
                         <div class="user-avatar">
-                            <img id="user-avatar-img" src="/assets/img/default-avatar.svg" alt="Avatar do usuário">
+                            <img id="user-avatar-img" src="/assets/img/logo/mlep-mark.svg" alt="Avatar do usuário">
                             <span id="user-avatar-text" class="user-avatar-text"></span>
                         </div>
                         <div class="user-info">
@@ -170,7 +170,7 @@
                     <div class="filters__search">
                         <input 
                             type="text" 
-                            id="search-input" 
+                            id="search-input" aria-label="Buscar"
                             class="search-input" 
                             placeholder="Buscar cursos..."
                             data-i18n-placeholder="courses.search_placeholder"
@@ -302,9 +302,9 @@
                 
                 <div class="footer__section">
                     <h4 class="footer__subtitle" data-i18n="footer.contact">Contato</h4>
-                    <p>Instituto de Física<br>
-                    Universidade Federal<br>
-                    contato@mlep.example.com</p>
+                    <p>Informações institucionais<br>
+                    Em atualização<br>
+                    <a href="https://github.com/Eldo-F-Chagas/Site_MLEP/issues">Contato pelo GitHub do projeto</a></p>
                 </div>
                 
                 <div class="footer__section">
@@ -319,14 +319,14 @@
             </div>
             
             <div class="footer__bottom">
-                <p>&copy; 2024 MLEP. Todos os direitos reservados.</p>
+                <p>&copy; <span data-current-year>2026</span> MLEP. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
     
     <!-- JavaScript -->
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/courses-catalog.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/courses-catalog.js"></script>
     <script>
         // Authentication and User Management
         class DataLabAuth {
@@ -336,6 +336,13 @@
             }
 
             async init() {
+                const isStaticPreview = window.location.hostname.endsWith('github.io')
+                    || window.location.pathname.startsWith('/Site_MLEP/');
+                if (isStaticPreview) {
+                    this.setupUserInterface();
+                    this.setupEventListeners();
+                    return;
+                }
                 await this.checkAuthStatus();
                 this.setupUserInterface();
                 this.setupEventListeners();

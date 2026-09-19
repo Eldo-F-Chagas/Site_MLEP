@@ -34,6 +34,10 @@ class CoursesCatalog {
     }
 
     async loadCourses() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.courses = [];
+            return;
+        }
         try {
             const response = await fetchAuth('/api/courses/');
             if (!response) return; // Redirected to login
@@ -42,11 +46,11 @@ class CoursesCatalog {
                 this.courses = await response.json();
             } else {
                 console.error('Failed to load courses');
-                this.courses = this.getMockCourses();
+                this.courses = [];
             }
         } catch (error) {
             console.error('Error loading courses:', error);
-            this.courses = this.getMockCourses();
+            this.courses = [];
         }
     }
 
@@ -103,6 +107,12 @@ class CoursesCatalog {
     }
 
     async setupExternalDataLabLink() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            document.querySelectorAll('#external-datalab-link, #footer-datalab-link').forEach(link => {
+                link.href = '/Site_MLEP/cursos.html';
+            });
+            return;
+        }
         try {
             const response = await fetch('/api/courses/datalab');
             if (response.ok) {
@@ -167,7 +177,7 @@ class CoursesCatalog {
 
         if (noResults) noResults.style.display = 'none';
 
-        courseGrid.innerHTML = this.filteredCourses.map(course => this.renderCourseCard(course)).join('');
+        courseGrid.innerHTML = window.MLEPSecurity.sanitize(this.filteredCourses.map(course => this.renderCourseCard(course)).join(''));
     }
 
     renderCourseCard(course) {
@@ -248,43 +258,6 @@ class CoursesCatalog {
         }
     }
 
-    getMockCourses() {
-        return [
-            {
-                id: 1,
-                slug: 'python-basico-ao-avancado',
-                title: 'Python básico ao avançado',
-                summary: 'Fundamentos, data wrangling, visualização, automação e boas práticas.',
-                level: 'iniciante',
-                hours: 40,
-                tags: ['python', 'datascience', 'programacao'],
-                is_active: true,
-                is_new: true
-            },
-            {
-                id: 2,
-                slug: 'latex-para-data-science',
-                title: 'LaTeX para Data Science',
-                summary: 'Produção de relatórios técnicos, artigos e apresentações científicas.',
-                level: 'intermediario',
-                hours: 16,
-                tags: ['latex', 'relatorios', 'documentacao'],
-                is_active: true,
-                is_new: false
-            },
-            {
-                id: 3,
-                slug: 'curvas-de-niveis',
-                title: 'Curvas de Níveis',
-                summary: 'Geração e análise de curvas de nível e aplicações em física ambiental.',
-                level: 'intermediario',
-                hours: 24,
-                tags: ['gis', 'ambiente', 'visualizacao'],
-                is_active: true,
-                is_new: false
-            }
-        ];
-    }
 }
 
 // Initialize when DOM is loaded

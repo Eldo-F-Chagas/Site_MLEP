@@ -10,6 +10,7 @@ class AuthManager {
     init() {
         this.setupGoogleLogin();
         this.handleUrlParams();
+        if (window.MLEP_STATIC_PREVIEW) return;
         this.checkAuthStatus();
     }
 
@@ -199,7 +200,7 @@ class AuthGuard {
 
         const userMenu = document.createElement('div');
         userMenu.className = 'user-menu';
-        userMenu.innerHTML = `
+        userMenu.innerHTML = window.MLEPSecurity.sanitize(`
             <div class="user-menu__trigger">
                 <img src="${user.picture || this.getDefaultAvatar(user.email)}" 
                      alt="${user.name || user.email}" 
@@ -221,7 +222,7 @@ class AuthGuard {
                     <span>Sair</span>
                 </button>
             </div>
-        `;
+        `);
 
         // Add to header
         const headerContent = header.querySelector('.container') || header;

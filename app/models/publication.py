@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
 from sqlalchemy.sql import func
 from app.db import Base
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List
 from datetime import datetime
 
@@ -35,7 +35,7 @@ class PublicationBase(BaseModel):
     pages: Optional[str] = None
     doi: Optional[str] = None
     pdf_url: Optional[str] = None
-    tags: Optional[List[str]] = []
+    tags: List[str] = Field(default_factory=list)
     research_area: Optional[str] = None
     is_featured: bool = False
 
@@ -61,5 +61,4 @@ class PublicationResponse(PublicationBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

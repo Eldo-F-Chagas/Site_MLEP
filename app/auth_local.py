@@ -3,10 +3,9 @@ Local authentication system with password-based login
 """
 
 import os
-import secrets
-import hashlib
 from datetime import datetime, timedelta
 from typing import Optional
+from urllib.parse import urlsplit
 
 from fastapi import HTTPException, Request, Response, Depends
 from sqlalchemy.orm import Session
@@ -18,9 +17,15 @@ from app.models.user import User, UserCreate, UserLogin, UserUpdate, SessionData
 
 
 # Configuration
-SESSION_SECRET = os.getenv("SESSION_SECRET", "dev-session-secret-change-in-production")
+_DEFAULT_SESSION_SECRET = "dev-session-secret-change-in-production"
+SESSION_SECRET = os.getenv("SESSION_SECRET", _DEFAULT_SESSION_SECRET)
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development").lower()
+COOKIE_SECURE = os.getenv("COOKIE_SECURE", "").lower() in {"1", "true", "yes"} or ENVIRONMENT == "production"
 SESSION_COOKIE_NAME = "mlep_session"
 SESSION_EXPIRES_DAYS = 7
+
+if ENVIRONMENT == "production" and (SESSION_SECRET == _DEFAULT_SESSION_SECRET or len(SESSION_SECRET) < 32):
+    raise RuntimeError("SESSION_SECRET must be set to a strong value of at least 32 characters in production")
 
 # Session serializer
 session_serializer = URLSafeTimedSerializer(SESSION_SECRET)
@@ -33,6 +38,8 @@ class AuthenticationError(Exception):
 
 def hash_password(password: str) -> str:
     """Hash a password using bcrypt"""
+    if len(password.encode("utf-8")) > 72:
+        raise AuthenticationError("Password must not exceed 72 bytes")
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed.decode('utf-8')
@@ -40,6 +47,8 @@ def hash_password(password: str) -> str:
 
 def verify_password(password: str, hashed_password: str) -> bool:
     """Verify a password against its hash"""
+    if not hashed_password or len(password.encode("utf-8")) > 72:
+        return False
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 
@@ -91,7 +100,7 @@ def set_session_cookie(response: Response, user: User):
         value=token,
         max_age=SESSION_EXPIRES_DAYS * 24 * 3600,  # seconds
         httponly=True,
-        secure=False,  # Set to True in production with HTTPS
+        secure=COOKIE_SECURE,
         samesite="lax"
     )
 
@@ -101,7 +110,7 @@ def clear_session_cookie(response: Response):
     response.delete_cookie(
         key=SESSION_COOKIE_NAME,
         httponly=True,
-        secure=False,  # Set to True in production with HTTPS
+        secure=COOKIE_SECURE,
         samesite="lax"
     )
 
@@ -149,7 +158,8 @@ def require_auth(user: User = Depends(get_current_user)) -> User:
 async def create_user(user_data: UserCreate, db: Session) -> User:
     """Create a new user with hashed password"""
     # Check if user already exists
-    existing_user = db.query(User).filter(User.email == user_data.email).first()
+    email = user_data.email.strip().lower()
+    existing_user = db.query(User).filter(User.email == email).first()
     if existing_user:
         raise AuthenticationError("User with this email already exists")
     
@@ -158,8 +168,8 @@ async def create_user(user_data: UserCreate, db: Session) -> User:
     
     # Create new user
     user = User(
-        email=user_data.email,
-        name=user_data.name,
+        email=email,
+        name=user_data.name.strip(),
         password_hash=password_hash,
         picture=user_data.picture,
         google_sub=None,  # Local users don't have Google sub
@@ -177,7 +187,7 @@ async def create_user(user_data: UserCreate, db: Session) -> User:
 async def authenticate_user(login_data: UserLogin, db: Session) -> User:
     """Authenticate user with email and password"""
     user = db.query(User).filter(
-        User.email == login_data.email,
+        User.email == login_data.email.strip().lower(),
         User.is_active == True
     ).first()
     
@@ -210,24 +220,17 @@ async def change_password(user: User, current_password: str, new_password: str, 
     return True
 
 
-def extract_next_url(request: Request) -> str:
-    """Extract next URL from request parameters"""
-    next_url = request.query_params.get("next", "/cursos")
-    
-    # Security: Only allow relative URLs
-    if next_url.startswith("http://") or next_url.startswith("https://"):
-        return "/cursos"
-    
+def sanitize_next_url(next_url: Optional[str], fallback: str = "/cursos") -> str:
+    """Return a local absolute path and reject open-redirect forms."""
+    if not next_url or not next_url.startswith("/") or next_url.startswith("//"):
+        return fallback
+    if "\\" in next_url or any(ord(char) < 32 for char in next_url):
+        return fallback
+    parsed = urlsplit(next_url)
+    if parsed.scheme or parsed.netloc:
+        return fallback
     return next_url
 
 
-def generate_csrf_token() -> str:
-    """Generate CSRF token"""
-    return secrets.token_urlsafe(32)
-
-
-def verify_csrf_token(token: str, session_token: str) -> bool:
-    """Verify CSRF token (simple implementation)"""
-    # In a real implementation, you'd store CSRF tokens in session
-    # For now, we'll use a simple check
-    return len(token) == 43  # URL-safe base64 token length
+def extract_next_url(request: Request, fallback: str = "/cursos") -> str:
+    return sanitize_next_url(request.query_params.get("next"), fallback)

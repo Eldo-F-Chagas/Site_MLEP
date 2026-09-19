@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, asc
+from sqlalchemy import func, or_
 from typing import List, Optional
 import json
 
@@ -85,7 +85,7 @@ async def get_team_members(
     
     return result
 
-@router.get("/team/{member_id}", response_model=MemberResponse)
+@router.get("/team/{member_id:int}", response_model=MemberResponse)
 async def get_team_member(member_id: int, db: Session = Depends(get_db)):
     """Get a specific team member by ID"""
     
@@ -168,7 +168,7 @@ async def get_team_stats(db: Session = Depends(get_db)):
     total_active = db.query(Member).filter(Member.is_active == True).count()
     total_alumni = db.query(Member).filter(Member.is_active == False).count()
     
-    by_role = db.query(Member.role, db.func.count(Member.id)).filter(
+    by_role = db.query(Member.role, func.count(Member.id)).filter(
         Member.is_active == True
     ).group_by(Member.role).all()
     

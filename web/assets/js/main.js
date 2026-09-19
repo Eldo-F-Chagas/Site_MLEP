@@ -1,8 +1,60 @@
 // Main JavaScript Module - Core functionality
+window.MLEPSecurity = Object.freeze({
+  sanitize(html) {
+    const template = document.createElement('template');
+    template.innerHTML = String(html);
+    template.content.querySelectorAll('script, iframe, object, embed, meta, base').forEach((node) => node.remove());
+    template.content.querySelectorAll('*').forEach((node) => {
+      [...node.attributes].forEach((attribute) => {
+        const name = attribute.name.toLowerCase();
+        if (name.startsWith('on') || name === 'srcdoc' || name === 'style') {
+          node.removeAttribute(attribute.name);
+          return;
+        }
+        if (['href', 'src', 'action', 'formaction'].includes(name)) {
+          try {
+            const value = attribute.value.trim();
+            const url = new URL(value, window.location.origin);
+            if (!['http:', 'https:', 'mailto:', 'tel:'].includes(url.protocol) && !value.startsWith('#')) {
+              node.removeAttribute(attribute.name);
+            }
+          } catch {
+            node.removeAttribute(attribute.name);
+          }
+        }
+      });
+    });
+    return template.innerHTML;
+  },
+});
+
+const MLEP_STATIC_BASE = window.location.hostname.endsWith('github.io')
+  || window.location.pathname.startsWith('/Site_MLEP/')
+  ? '/Site_MLEP'
+  : '';
+window.MLEP_STATIC_PREVIEW = Boolean(MLEP_STATIC_BASE);
+
+window.fetchAuth = async (url, options = {}) => {
+  if (window.MLEP_STATIC_PREVIEW) {
+    return new Response(JSON.stringify([]), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  const response = await fetch(url, { credentials: 'include', ...options });
+  if (response.status === 401) {
+    const next = encodeURIComponent(window.location.pathname + window.location.search);
+    window.location.assign(`/login?next=${next}`);
+    return null;
+  }
+  return response;
+};
+
 class MLEPApp {
   constructor() {
     this.theme = this.getStoredTheme() || this.detectTheme();
     this.apiBaseUrl = '/api';
+    this.githubPagesBase = MLEP_STATIC_BASE;
     
     this.init();
   }
@@ -26,10 +78,49 @@ class MLEPApp {
   }
 
   onDOMReady() {
+    this.setupStaticPreviewLinks();
+    this.setupCurrentYear();
     this.setupThemeToggle();
     this.setupMobileNavigation();
     this.setupSmoothScrolling();
     this.setupFormValidation();
+  }
+
+  setupStaticPreviewLinks() {
+    if (!this.githubPagesBase) return;
+    const banner = document.createElement('aside');
+    banner.className = 'static-preview-banner';
+    banner.setAttribute('role', 'status');
+    banner.textContent = 'Prévia estática: contas, formulários e dados dinâmicos exigem a implantação completa da API.';
+    document.body.prepend(banner);
+
+    const publicPages = new Set([
+      'about', 'aula', 'contact', 'curso', 'cursos', 'events', 'forum',
+      'forum-topic', 'index', 'login', 'materiais', 'news', 'profile',
+      'projects', 'publications', 'register', 'research', 'resources',
+      'settings', 'team',
+    ]);
+    document.querySelectorAll('a[href^="/"]').forEach((link) => {
+      const target = new URL(link.getAttribute('href'), window.location.origin);
+      const page = target.pathname.replace(/^\//, '') || 'index';
+      if (publicPages.has(page)) {
+        link.href = `${this.githubPagesBase}/${page}.html${target.search}${target.hash}`;
+      }
+    });
+
+    document.querySelectorAll('form').forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        this.showNotification('Formulários indisponíveis nesta prévia estática.', 'info');
+      }, true);
+    });
+  }
+
+  setupCurrentYear() {
+    document.querySelectorAll('[data-current-year]').forEach((node) => {
+      node.textContent = String(new Date().getFullYear());
+    });
   }
 
   // Theme Management
@@ -140,18 +231,31 @@ class MLEPApp {
 
   // Data Lab Links
   async setupDataLabLinks() {
+    const dataLabLinks = document.querySelectorAll('#datalab-link, #hero-datalab-link, #footer-datalab-link, #external-datalab-link');
+    if (window.MLEP_STATIC_PREVIEW) {
+      dataLabLinks.forEach((link) => {
+        link.href = `${this.githubPagesBase}/cursos.html`;
+      });
+      return;
+    }
     try {
       const response = await fetch(`${this.apiBaseUrl}/courses/datalab`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-      
-      const dataLabLinks = document.querySelectorAll('#datalab-link, #hero-datalab-link, #footer-datalab-link');
+      const target = new URL(data.url || '/cursos', window.location.origin);
+      if (!['http:', 'https:'].includes(target.protocol)) throw new Error('Invalid Data Lab URL');
       dataLabLinks.forEach(link => {
-        link.href = data.url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
+        link.href = target.href;
+        if (target.origin !== window.location.origin) {
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+        }
       });
     } catch (error) {
       console.error('Error loading Data Lab URL:', error);
+      dataLabLinks.forEach((link) => {
+        link.href = this.githubPagesBase ? `${this.githubPagesBase}/cursos.html` : '/cursos';
+      });
     }
   }
 
@@ -401,7 +505,8 @@ class MLEPApp {
   async registerServiceWorker() {
     if ('serviceWorker' in navigator) {
       try {
-        const registration = await navigator.serviceWorker.register('/sw.js');
+        const serviceWorkerUrl = this.githubPagesBase ? `${this.githubPagesBase}/sw.js` : '/sw.js';
+        const registration = await navigator.serviceWorker.register(serviceWorkerUrl);
         console.log('Service Worker registered successfully:', registration);
 
         // Handle updates

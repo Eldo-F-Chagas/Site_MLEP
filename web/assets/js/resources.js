@@ -26,13 +26,7 @@ class ResourcesPage {
     }
 
     async loadResources() {
-        try {
-            // Mock resources data - in real implementation, this would come from API
-            this.resources = this.getMockResources();
-        } catch (error) {
-            console.error('Error loading resources:', error);
-            this.resources = [];
-        }
+        this.resources = [];
     }
 
     async loadCategoryCounts() {
@@ -108,6 +102,10 @@ class ResourcesPage {
     }
 
     async loadDataLabUrl() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            window.location.href = '/Site_MLEP/cursos.html';
+            return;
+        }
         try {
             const response = await fetch('/api/courses/datalab');
             if (response.ok) {
@@ -289,7 +287,7 @@ class ResourcesPage {
         // Render featured resources
         const featuredResources = this.filteredResources.filter(r => r.is_featured).slice(0, 3);
         if (featuredContainer && featuredResources.length > 0) {
-            featuredContainer.innerHTML = featuredResources.map(resource => this.renderFeaturedResource(resource)).join('');
+            featuredContainer.innerHTML = window.MLEPSecurity.sanitize(featuredResources.map(resource => this.renderFeaturedResource(resource)).join(''));
         }
 
         // Render regular resources
@@ -297,7 +295,7 @@ class ResourcesPage {
         const endIndex = this.currentPage * this.itemsPerPage;
         const resourcesToShow = this.filteredResources.slice(startIndex, endIndex);
 
-        resourcesContainer.innerHTML = resourcesToShow.map(resource => this.renderResourceItem(resource)).join('');
+        resourcesContainer.innerHTML = window.MLEPSecurity.sanitize(resourcesToShow.map(resource => this.renderResourceItem(resource)).join(''));
 
         // Show/hide load more button
         if (loadMoreContainer) {
@@ -405,49 +403,6 @@ class ResourcesPage {
         this.renderResources();
     }
 
-    getMockResources() {
-        return [
-            {
-                id: 1,
-                title: "Dataset de Qualidade do Ar - São Paulo",
-                description: "Dados históricos de qualidade do ar da cidade de São Paulo (2020-2024).",
-                type: "dataset",
-                format: "CSV",
-                size: "15 MB",
-                download_url: "/datasets/air-quality-sp.csv",
-                documentation_url: "/docs/air-quality-dataset",
-                tags: ["Qualidade do Ar", "São Paulo", "Histórico"],
-                created_date: "2024-01-15",
-                is_featured: true
-            },
-            {
-                id: 2,
-                title: "MLEnv Toolkit",
-                description: "Biblioteca Python para análise de dados ambientais com machine learning.",
-                type: "tool",
-                format: "Python Package",
-                size: "2 MB",
-                download_url: "https://pypi.org/project/mlenv-toolkit/",
-                documentation_url: "/docs/mlenv-toolkit",
-                tags: ["Python", "Machine Learning", "Toolkit"],
-                created_date: "2024-01-10",
-                is_featured: false
-            },
-            {
-                id: 3,
-                title: "Tutorial: Previsão Climática com LSTM",
-                description: "Notebook Jupyter com tutorial completo sobre previsão climática usando redes LSTM.",
-                type: "notebook",
-                format: "Jupyter Notebook",
-                size: "5 MB",
-                download_url: "/notebooks/climate-prediction-lstm.ipynb",
-                documentation_url: null,
-                tags: ["LSTM", "Clima", "Tutorial"],
-                created_date: "2024-01-05",
-                is_featured: true
-            }
-        ];
-    }
 }
 
 // Initialize when DOM is loaded

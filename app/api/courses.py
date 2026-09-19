@@ -8,11 +8,11 @@ async def get_datalab_info():
     """Get Data Lab course information and redirect URL"""
     
     # Get Data Lab URL from environment variable
-    data_lab_url = os.getenv("DATA_LAB_URL", "https://example.com/data-lab")
+    data_lab_url = os.getenv("DATA_LAB_URL", "/cursos")
     
     return {
         "name": "Data Lab",
-        "description": "Comprehensive courses on Machine Learning applied to Environmental Physics",
+        "description": "Cursos de Machine Learning aplicado à Física Ambiental",
         "url": data_lab_url,
         "features": [
             "Hands-on machine learning techniques for environmental data",
@@ -48,7 +48,7 @@ async def get_courses_stats():
                 "name": "Data Lab",
                 "type": "external",
                 "status": "active",
-                "url": os.getenv("DATA_LAB_URL", "https://example.com/data-lab")
+                "url": os.getenv("DATA_LAB_URL", "/cursos")
             }
         ]
     }

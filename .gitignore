@@ -23,6 +23,7 @@ MANIFEST
 
 # Virtual Environment
 venv/
+.venv/
 env/
 ENV/
 env.bak/
@@ -74,6 +75,3 @@ logs/
 .coverage
 .pytest_cache/
 htmlcov/
-
-# Docker
-.dockerignore

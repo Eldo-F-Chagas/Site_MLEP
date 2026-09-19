@@ -9,7 +9,7 @@ from sqlalchemy import func, and_
 import json
 
 from app.db import get_db
-from app.auth import require_auth
+from app.auth_local import require_auth
 from app.models.user import User
 from app.models.course import (
     Course, Module, Lesson, Material, ForumTopic, ForumPost,
@@ -130,7 +130,12 @@ async def get_course_materials(slug: str, db: Session = Depends(get_db), current
 
 
 @router.get("/{slug}/lessons/{lesson_slug}/materials", response_model=List[MaterialResponse])
-async def get_lesson_materials(slug: str, lesson_slug: str, db: Session = Depends(get_db)):
+async def get_lesson_materials(
+    slug: str,
+    lesson_slug: str,
+    db: Session = Depends(get_db),
+    _current_user: User = Depends(require_auth),
+):
     """Get materials for a specific lesson"""
     lesson = db.query(Lesson).join(Module).join(Course).filter(
         and_(
@@ -148,7 +153,12 @@ async def get_lesson_materials(slug: str, lesson_slug: str, db: Session = Depend
 
 
 @router.post("/{slug}/materials/{material_id}/download")
-async def download_material(slug: str, material_id: int, db: Session = Depends(get_db)):
+async def download_material(
+    slug: str,
+    material_id: int,
+    db: Session = Depends(get_db),
+    _current_user: User = Depends(require_auth),
+):
     """Increment download count for a material"""
     material = db.query(Material).join(Course).filter(
         and_(
@@ -172,7 +182,8 @@ async def download_material(slug: str, material_id: int, db: Session = Depends(g
 async def get_forum_topics(
     slug: str,
     lesson_id: Optional[int] = Query(None, description="Filter by lesson"),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _current_user: User = Depends(require_auth),
 ):
     """Get forum topics for a course or lesson"""
     course = db.query(Course).filter(
@@ -207,7 +218,8 @@ async def get_forum_topics(
 async def create_forum_topic(
     slug: str,
     topic_data: ForumTopicCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_auth),
 ):
     """Create a new forum topic"""
     course = db.query(Course).filter(
@@ -232,7 +244,7 @@ async def create_forum_topic(
         course_id=course.id,
         lesson_id=topic_data.lesson_id,
         title=topic_data.title,
-        author=topic_data.author
+        author=current_user.name or current_user.email
     )
     
     db.add(topic)
@@ -244,7 +256,12 @@ async def create_forum_topic(
 
 
 @router.get("/{slug}/forum/topics/{topic_id}", response_model=ForumTopicWithPosts)
-async def get_forum_topic(slug: str, topic_id: int, db: Session = Depends(get_db)):
+async def get_forum_topic(
+    slug: str,
+    topic_id: int,
+    db: Session = Depends(get_db),
+    _current_user: User = Depends(require_auth),
+):
     """Get forum topic with all posts"""
     topic = db.query(ForumTopic).join(Course).filter(
         and_(
@@ -269,7 +286,8 @@ async def create_forum_post(
     slug: str,
     topic_id: int,
     post_data: ForumPostCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_auth),
 ):
     """Create a new forum post"""
     topic = db.query(ForumTopic).join(Course).filter(
@@ -288,7 +306,7 @@ async def create_forum_post(
     
     post = ForumPost(
         topic_id=topic.id,
-        author=post_data.author,
+        author=current_user.name or current_user.email,
         body_md=post_data.body_md
     )
     
@@ -305,7 +323,11 @@ async def create_forum_post(
 
 # Statistics endpoints
 @router.get("/{slug}/stats")
-async def get_course_stats(slug: str, db: Session = Depends(get_db)):
+async def get_course_stats(
+    slug: str,
+    db: Session = Depends(get_db),
+    _current_user: User = Depends(require_auth),
+):
     """Get course statistics"""
     course = db.query(Course).filter(
         and_(Course.slug == slug, Course.is_active == True)

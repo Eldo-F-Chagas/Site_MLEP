@@ -9,21 +9,20 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mlep.example.com/news">
+    <meta property="og:url" content="https://eldo-f-chagas.github.io/Site_MLEP/news.html">
     <meta property="og:title" content="Notícias - MLEP">
     <meta property="og:description" content="Acompanhe as últimas notícias e eventos do MLEP">
-    <meta property="og:image" content="/assets/img/og-news.jpg">
+    <meta property="og:image" content="https://eldo-f-chagas.github.io/Site_MLEP/assets/img/logo/mlep-mark.svg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://mlep.example.com/news">
+    <meta property="twitter:url" content="https://eldo-f-chagas.github.io/Site_MLEP/news.html">
     <meta property="twitter:title" content="Notícias - MLEP">
     <meta property="twitter:description" content="Acompanhe as últimas notícias e eventos do MLEP">
-    <meta property="twitter:image" content="/assets/img/og-news.jpg">
+    <meta property="twitter:image" content="https://eldo-f-chagas.github.io/Site_MLEP/assets/img/logo/mlep-mark.svg">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
-    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/assets/img/logo/mlep-mark.svg">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/global.css">
@@ -44,7 +43,7 @@
         <nav class="nav container" role="navigation" aria-label="Main navigation">
             <div class="nav__brand">
                 <a href="/" class="nav__logo" aria-label="MLEP Home">
-                    <img src="/assets/img/logo.svg" alt="MLEP Logo" width="40" height="40">
+                    <img src="/assets/img/logo/mlep-mark.svg" alt="MLEP Logo" width="40" height="40">
                     <span class="nav__logo-text">MLEP</span>
                 </a>
             </div>
@@ -137,7 +136,7 @@
                         <div class="search-box">
                             <input 
                                 type="text" 
-                                id="search-input" 
+                                id="search-input" aria-label="Buscar"
                                 class="search-input" 
                                 placeholder="Buscar notícias..."
                             >
@@ -259,23 +258,23 @@
                 <div class="footer__section">
                     <h3 class="footer__title" data-i18n="footer.contact_info">Informações de Contato</h3>
                     <div class="footer__contact">
-                        <p>📧 contato@mlep.example.com</p>
-                        <p>📍 Universidade Federal, Campus Principal</p>
+                        <p>📧 <a href="https://github.com/Eldo-F-Chagas/Site_MLEP/issues">Contato pelo GitHub do projeto</a></p>
+                        <p>📍 Vínculo institucional em atualização</p>
                         <p>🌐 <a href="#" id="footer-datalab-link" data-i18n="nav.datalab">Data Lab</a></p>
                     </div>
                 </div>
             </div>
             <div class="footer__bottom">
                 <p class="footer__copyright" data-i18n="footer.copyright">
-                    © 2024 MLEP - Machine Learning Applied to Environmental Physics. Todos os direitos reservados.
+                    © <span data-current-year>2026</span> MLEP - Machine Learning Applied to Environmental Physics. Todos os direitos reservados.
                 </p>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="/assets/js/i18n.js"></script>
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/news.js"></script>
+    <script type="module" src="/assets/js/i18n.js"></script>
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/news.js"></script>
 </body>
 </html>

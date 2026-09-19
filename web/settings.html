@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configurações | MLEP</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/img/logo/mlep-mark.svg">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/course-page.css">
+</head>
+<body data-page="settings">
+  <a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+  <header class="header"><div class="container"><a href="/" class="nav__logo"><img src="/assets/img/logo/mlep-mark.svg" alt="MLEP" width="40" height="40"></a><nav aria-label="Navegação"><a href="/cursos">Cursos</a> · <a href="/profile">Perfil</a></nav></div></header>
+  <main id="main-content" class="container course-content">
+    <section id="page-content"><p class="state-message">Carregando conta…</p></section>
+    <form id="password-form" class="module">
+      <h2>Alterar senha</h2>
+      <label for="current-password">Senha atual</label>
+      <input id="current-password" name="current_password" type="password" autocomplete="current-password" required maxlength="72">
+      <label for="new-password">Nova senha</label>
+      <input id="new-password" name="new_password" type="password" autocomplete="new-password" required minlength="8" maxlength="72">
+      <label for="confirm-password">Confirmar nova senha</label>
+      <input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" required minlength="8" maxlength="72">
+      <button class="btn btn--primary" type="submit">Salvar nova senha</button>
+      <p id="settings-status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+  <script type="module" src="/assets/js/main.js"></script>
+  <script type="module" src="/assets/js/lms-pages.js"></script>
+</body>
+</html>

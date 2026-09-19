@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+Disallow: /settings
+Disallow: /cursos
+
+Sitemap: https://eldo-f-chagas.github.io/Site_MLEP/sitemap.xml

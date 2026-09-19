@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import or_
+from sqlalchemy import func, or_
 from typing import List, Optional
 import json
 
@@ -83,7 +83,7 @@ async def get_projects(
     
     return result
 
-@router.get("/projects/{project_id}", response_model=ProjectResponse)
+@router.get("/projects/{project_id:int}", response_model=ProjectResponse)
 async def get_project(project_id: int, db: Session = Depends(get_db)):
     """Get a specific project by ID"""
     
@@ -122,7 +122,7 @@ async def get_projects_stats(db: Session = Depends(get_db)):
     """Get project statistics"""
     
     total = db.query(Project).count()
-    by_status = db.query(Project.status, db.func.count(Project.id)).group_by(Project.status).all()
+    by_status = db.query(Project.status, func.count(Project.id)).group_by(Project.status).all()
     featured = db.query(Project).filter(Project.is_featured == True).count()
     
     return {

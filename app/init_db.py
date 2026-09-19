@@ -4,6 +4,7 @@ Creates all tables and populates with sample data
 """
 
 import json
+import os
 from datetime import datetime
 from sqlalchemy.orm import Session
 from app.db import engine, SessionLocal, Base
@@ -220,8 +221,9 @@ def main():
     db = SessionLocal()
     
     try:
-        # Populate with sample data
-        populate_courses(db)
+        # Demo content is opt-in so production never publishes fabricated data.
+        if os.getenv("SEED_DEMO_DATA", "false").lower() in {"1", "true", "yes"}:
+            populate_courses(db)
         
         # Commit all changes
         db.commit()

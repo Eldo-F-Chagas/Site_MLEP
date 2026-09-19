@@ -24,6 +24,10 @@ class TeamPage {
     }
 
     async loadTeamMembers() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.members = [];
+            return;
+        }
         try {
             const response = await fetch('/api/team');
             if (response.ok) {
@@ -33,12 +37,15 @@ class TeamPage {
             }
         } catch (error) {
             console.error('Error loading team members:', error);
-            // Use mock data as fallback
-            this.members = this.getMockMembers();
+            this.members = [];
         }
     }
 
     async loadStatistics() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.renderStatistics({ total: 0, researchers: 0, students: 0, alumni: 0 });
+            return;
+        }
         try {
             const response = await fetch('/api/team/stats');
             if (response.ok) {
@@ -154,7 +161,7 @@ class TeamPage {
                     section.style.display = 'block';
                     const grid = section.querySelector('.team-grid');
                     if (grid) {
-                        grid.innerHTML = members.map(member => this.renderMemberCard(member)).join('');
+                        grid.innerHTML = window.MLEPSecurity.sanitize(members.map(member => this.renderMemberCard(member)).join(''));
                     }
                 } else {
                     section.style.display = 'none';
@@ -165,7 +172,7 @@ class TeamPage {
 
     renderMemberCard(member) {
         const alumniClass = !member.is_active ? 'member-card--alumni' : '';
-        const photoUrl = member.photo_url || '/assets/img/default-avatar.jpg';
+        const photoUrl = member.photo_url || '/assets/img/logo/mlep-mark.svg';
         
         return `
             <div class="member-card ${alumniClass}" data-member-id="${member.id}">
@@ -246,54 +253,6 @@ class TeamPage {
         console.log('Show details for:', member.name);
     }
 
-    getMockMembers() {
-        return [
-            {
-                id: 1,
-                name: "Dr. Ana Silva",
-                email: "ana.silva@mlep.example.com",
-                role: "PRINCIPAL_INVESTIGATOR",
-                position: "Professora Titular",
-                bio: "Especialista em machine learning aplicado a problemas ambientais com mais de 15 anos de experiência.",
-                photo_url: "/assets/img/team/ana-silva.jpg",
-                orcid_id: "0000-0000-0000-0001",
-                google_scholar_id: "scholar123",
-                github_username: "anasilva",
-                lattes_id: "1234567890",
-                research_interests: ["Machine Learning", "Climate Modeling", "Environmental Physics"],
-                is_active: true
-            },
-            {
-                id: 2,
-                name: "Dr. Bruno Santos",
-                email: "bruno.santos@mlep.example.com",
-                role: "RESEARCHER",
-                position: "Professor Associado",
-                bio: "Pesquisador em qualidade do ar e sistemas de monitoramento inteligente.",
-                photo_url: "/assets/img/team/bruno-santos.jpg",
-                orcid_id: "0000-0000-0000-0002",
-                google_scholar_id: "scholar456",
-                github_username: "brunosantos",
-                lattes_id: "2345678901",
-                research_interests: ["Air Quality", "IoT", "Data Analysis"],
-                is_active: true
-            },
-            {
-                id: 3,
-                name: "Carlos Oliveira",
-                email: "carlos.oliveira@mlep.example.com",
-                role: "PHD_STUDENT",
-                position: "Doutorando em Física Ambiental",
-                bio: "Estudante de doutorado focado em modelagem climática usando deep learning.",
-                photo_url: "/assets/img/team/carlos-oliveira.jpg",
-                orcid_id: "0000-0000-0000-0003",
-                github_username: "carlosoliveira",
-                lattes_id: "3456789012",
-                research_interests: ["Deep Learning", "Climate", "Neural Networks"],
-                is_active: true
-            }
-        ];
-    }
 }
 
 // Initialize when DOM is loaded

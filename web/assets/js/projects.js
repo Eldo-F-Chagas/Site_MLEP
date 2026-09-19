@@ -28,6 +28,10 @@ class ProjectsPage {
     }
 
     async loadProjects() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.projects = [];
+            return;
+        }
         try {
             const response = await fetch('/api/projects');
             if (response.ok) {
@@ -37,12 +41,15 @@ class ProjectsPage {
             }
         } catch (error) {
             console.error('Error loading projects:', error);
-            // Use mock data as fallback
-            this.projects = this.getMockProjects();
+            this.projects = [];
         }
     }
 
     async loadStatistics() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.renderStatistics({ total: 0, ongoing: 0, completed: 0, featured: 0 });
+            return;
+        }
         try {
             const response = await fetch('/api/projects/stats');
             if (response.ok) {
@@ -180,7 +187,7 @@ class ProjectsPage {
         const endIndex = this.currentPage * this.itemsPerPage;
         const projectsToShow = this.filteredProjects.slice(startIndex, endIndex);
 
-        container.innerHTML = projectsToShow.map(project => this.renderProjectCard(project)).join('');
+        container.innerHTML = window.MLEPSecurity.sanitize(projectsToShow.map(project => this.renderProjectCard(project)).join(''));
 
         // Show/hide load more button
         if (loadMoreContainer) {
@@ -328,42 +335,6 @@ class ProjectsPage {
         this.renderProjects();
     }
 
-    getMockProjects() {
-        return [
-            {
-                id: 1,
-                title: "ML-Climate: Previsão Climática Avançada",
-                description: "Desenvolvimento de modelos de machine learning para previsão climática de longo prazo usando dados de múltiplas fontes.",
-                status: "ongoing",
-                start_date: "2023-01-15",
-                end_date: null,
-                funding_agency: "CNPq",
-                funding_amount: 150000,
-                team_members: ["Dr. Silva", "Dra. Santos", "João Aluno"],
-                research_areas: ["Climate", "Machine Learning"],
-                dataset_url: "/datasets/climate-data",
-                repository_url: "https://github.com/mlep/ml-climate",
-                results_url: "/results/ml-climate",
-                is_featured: true
-            },
-            {
-                id: 2,
-                title: "AirSense: Monitoramento Inteligente do Ar",
-                description: "Sistema de IoT com IA para monitoramento em tempo real da qualidade do ar urbano.",
-                status: "completed",
-                start_date: "2022-03-01",
-                end_date: "2023-12-31",
-                funding_agency: "FAPESP",
-                funding_amount: 200000,
-                team_members: ["Dra. Costa", "Dr. Lima", "Maria Aluna"],
-                research_areas: ["Air Quality", "IoT"],
-                dataset_url: "/datasets/air-quality",
-                repository_url: "https://github.com/mlep/airsense",
-                results_url: "/results/airsense",
-                is_featured: false
-            }
-        ];
-    }
 }
 
 // Initialize when DOM is loaded

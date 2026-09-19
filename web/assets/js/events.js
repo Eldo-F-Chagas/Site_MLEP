@@ -22,6 +22,10 @@ class EventsPage {
     }
 
     async loadEvents() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.events = [];
+            return;
+        }
         try {
             const response = await fetch('/api/events');
             if (response.ok) {
@@ -31,8 +35,7 @@ class EventsPage {
             }
         } catch (error) {
             console.error('Error loading events:', error);
-            // Use mock data as fallback
-            this.events = this.getMockEvents();
+            this.events = [];
         }
     }
 
@@ -143,7 +146,7 @@ class EventsPage {
             return;
         }
 
-        container.innerHTML = upcomingEvents.map(event => this.renderEventCard(event)).join('');
+        container.innerHTML = window.MLEPSecurity.sanitize(upcomingEvents.map(event => this.renderEventCard(event)).join(''));
     }
 
     renderPastEvents(container) {
@@ -169,7 +172,7 @@ class EventsPage {
             return;
         }
 
-        container.innerHTML = eventsToShow.map(event => this.renderPastEventItem(event)).join('');
+        container.innerHTML = window.MLEPSecurity.sanitize(eventsToShow.map(event => this.renderPastEventItem(event)).join(''));
     }
 
     renderEventCard(event) {
@@ -284,45 +287,6 @@ class EventsPage {
         this.renderEvents();
     }
 
-    getMockEvents() {
-        return [
-            {
-                id: 1,
-                title: "Workshop de Machine Learning Ambiental",
-                summary: "Introdução às técnicas de ML aplicadas a problemas ambientais.",
-                content: "Workshop prático sobre...",
-                type: "workshop",
-                event_date: "2024-03-15T14:00:00",
-                event_location: "Auditório Principal",
-                image_url: "/assets/img/events/ml-workshop.jpg",
-                is_featured: true,
-                is_published: true
-            },
-            {
-                id: 2,
-                title: "Seminário de Pesquisa MLEP",
-                summary: "Apresentação dos resultados de pesquisa do semestre.",
-                content: "Seminário mensal...",
-                type: "seminar",
-                event_date: "2024-02-20T10:00:00",
-                event_location: "Sala de Conferências",
-                image_url: "/assets/img/events/seminar.jpg",
-                is_featured: false,
-                is_published: true
-            },
-            {
-                id: 3,
-                title: "Defesa de Tese - Carlos Oliveira",
-                summary: "Defesa da tese sobre modelagem climática com deep learning.",
-                content: "Defesa de doutorado...",
-                type: "defense",
-                event_date: "2023-12-10T14:00:00",
-                event_location: "Auditório 1",
-                is_featured: false,
-                is_published: true
-            }
-        ];
-    }
 }
 
 // Initialize when DOM is loaded

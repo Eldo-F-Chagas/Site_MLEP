@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Enum
 from sqlalchemy.sql import func
 from app.db import Base
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from typing import Optional
 from datetime import datetime
 import enum
@@ -46,10 +46,12 @@ class Newsletter(Base):
 
 # Pydantic models for API
 class ContactCreate(BaseModel):
-    name: str
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: str = Field(min_length=2, max_length=200)
     email: EmailStr
-    subject: str
-    message: str
+    subject: str = Field(min_length=3, max_length=300)
+    message: str = Field(min_length=10, max_length=10_000)
     contact_type: ContactType = ContactType.GENERAL
 
 class ContactResponse(BaseModel):
@@ -62,12 +64,13 @@ class ContactResponse(BaseModel):
     status: ContactStatus
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class NewsletterSubscribe(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
     email: EmailStr
-    name: Optional[str] = None
+    name: Optional[str] = Field(default=None, max_length=200)
 
 class NewsletterResponse(BaseModel):
     id: int
@@ -76,5 +79,4 @@ class NewsletterResponse(BaseModel):
     is_active: bool
     subscribed_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

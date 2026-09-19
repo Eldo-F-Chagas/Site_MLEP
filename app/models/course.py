@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Optional, List, Literal
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from app.db import Base
 
 
@@ -131,7 +131,7 @@ class CourseBase(BaseModel):
     description: Optional[str] = None
     level: Literal["iniciante", "intermediario", "avancado"]
     hours: int = Field(..., gt=0)
-    tags: List[str] = []
+    tags: List[str] = Field(default_factory=list)
     cover_url: Optional[str] = None
 
 
@@ -156,8 +156,7 @@ class CourseResponse(CourseBase):
     created_at: datetime
     updated_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ModuleBase(BaseModel):
@@ -175,8 +174,7 @@ class ModuleResponse(ModuleBase):
     course_id: int
     created_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class LessonBase(BaseModel):
@@ -200,8 +198,7 @@ class LessonResponse(LessonBase):
     module_id: int
     created_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MaterialBase(BaseModel):
@@ -225,8 +222,7 @@ class MaterialResponse(MaterialBase):
     download_count: int
     created_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ForumTopicBase(BaseModel):
@@ -234,8 +230,8 @@ class ForumTopicBase(BaseModel):
     author: str = Field(..., max_length=100)
 
 
-class ForumTopicCreate(ForumTopicBase):
-    course_id: int
+class ForumTopicCreate(BaseModel):
+    title: str = Field(..., min_length=3, max_length=200)
     lesson_id: Optional[int] = None
 
 
@@ -249,8 +245,7 @@ class ForumTopicResponse(ForumTopicBase):
     updated_at: datetime
     post_count: int = 0
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ForumPostBase(BaseModel):
@@ -258,8 +253,8 @@ class ForumPostBase(BaseModel):
     body_md: str
 
 
-class ForumPostCreate(ForumPostBase):
-    topic_id: int
+class ForumPostCreate(BaseModel):
+    body_md: str = Field(..., min_length=1, max_length=10_000)
 
 
 class ForumPostResponse(ForumPostBase):
@@ -268,24 +263,23 @@ class ForumPostResponse(ForumPostBase):
     created_at: datetime
     updated_at: datetime
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # Complex response schemas with relationships
 class LessonWithMaterials(LessonResponse):
-    materials: List[MaterialResponse] = []
+    materials: List[MaterialResponse] = Field(default_factory=list)
 
 
 class ModuleWithLessons(ModuleResponse):
-    lessons: List[LessonResponse] = []
+    lessons: List[LessonResponse] = Field(default_factory=list)
 
 
 class CourseWithModules(CourseResponse):
-    modules: List[ModuleWithLessons] = []
+    modules: List[ModuleWithLessons] = Field(default_factory=list)
     material_count: int = 0
     lesson_count: int = 0
 
 
 class ForumTopicWithPosts(ForumTopicResponse):
-    posts: List[ForumPostResponse] = []
+    posts: List[ForumPostResponse] = Field(default_factory=list)

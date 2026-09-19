@@ -4,6 +4,9 @@ class I18n {
     this.currentLang = this.getStoredLanguage() || this.detectLanguage();
     this.translations = {};
     this.fallbackLang = 'pt';
+    const isStaticPreview = window.location.hostname.endsWith('github.io')
+      || window.location.pathname.startsWith('/Site_MLEP/');
+    this.basePath = isStaticPreview ? '/Site_MLEP' : '';
     
     this.init();
   }
@@ -41,7 +44,7 @@ class I18n {
 
   async loadTranslations() {
     try {
-      const response = await fetch(`/i18n/${this.currentLang}.json`);
+      const response = await fetch(`${this.basePath}/i18n/${this.currentLang}.json`);
       if (!response.ok) {
         throw new Error(`Failed to load translations for ${this.currentLang}`);
       }
@@ -52,7 +55,7 @@ class I18n {
       // Try to load fallback language
       if (this.currentLang !== this.fallbackLang) {
         try {
-          const fallbackResponse = await fetch(`/i18n/${this.fallbackLang}.json`);
+          const fallbackResponse = await fetch(`${this.basePath}/i18n/${this.fallbackLang}.json`);
           this.translations = await fallbackResponse.json();
         } catch (fallbackError) {
           console.error('Error loading fallback translations:', fallbackError);
@@ -70,7 +73,7 @@ class I18n {
     
     elements.forEach(element => {
       const key = element.getAttribute('data-i18n');
-      const translation = this.getTranslation(key);
+      const translation = this.interpolate(this.getTranslation(key));
       
       if (translation) {
         // Handle different element types
@@ -81,6 +84,14 @@ class I18n {
         } else {
           element.textContent = translation;
         }
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+      const key = element.getAttribute('data-i18n-placeholder');
+      const translation = this.interpolate(this.getTranslation(key));
+      if (translation) {
+        element.placeholder = translation;
       }
     });
 
@@ -119,6 +130,11 @@ class I18n {
     }
     
     return typeof value === 'string' ? value : null;
+  }
+
+  interpolate(value) {
+    if (!value) return value;
+    return value.replaceAll('{year}', String(new Date().getFullYear()));
   }
 
   setupLanguageToggle() {
@@ -203,9 +219,7 @@ class I18n {
 // Initialize i18n when DOM is loaded
 let i18n;
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   i18n = new I18n();
+  window.i18n = i18n;
 });
-
-// Export for use in other modules
-window.i18n = i18n;

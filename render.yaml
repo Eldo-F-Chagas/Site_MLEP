@@ -1,17 +1,26 @@
 services:
   - type: web
     name: mlep-site
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    env: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
-        value: sqlite:///./data/mlep_dev.db
-      - key: SECRET_KEY
-        generateValue: true
+        fromDatabase:
+          name: mlep-db
+          property: connectionString
       - key: SESSION_SECRET
         generateValue: true
-    disk:
-      name: mlep-data
-      mountPath: /opt/render/project/src/data
-      sizeGB: 1
+      - key: ADMIN_STATS_TOKEN
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: https://mlep-site.onrender.com
+      - key: DATA_LAB_URL
+        value: /cursos
+
+databases:
+  - name: mlep-db
+    databaseName: mlep
+    user: mlep

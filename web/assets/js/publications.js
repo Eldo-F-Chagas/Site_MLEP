@@ -28,6 +28,10 @@ class PublicationsPage {
     }
 
     async loadPublications() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.publications = [];
+            return;
+        }
         try {
             const response = await fetch('/api/publications');
             if (response.ok) {
@@ -37,12 +41,15 @@ class PublicationsPage {
             }
         } catch (error) {
             console.error('Error loading publications:', error);
-            // Use mock data as fallback
-            this.publications = this.getMockPublications();
+            this.publications = [];
         }
     }
 
     async loadStatistics() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.renderStatistics({ total: 0, thisYear: 0, featured: 0, journals: 0 });
+            return;
+        }
         try {
             const response = await fetch('/api/publications/stats');
             if (response.ok) {
@@ -123,6 +130,13 @@ class PublicationsPage {
                 this.loadMore();
             });
         }
+
+        document.getElementById('publications-list')?.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-share-publication]');
+            if (!button) return;
+            const publication = this.publications.find(item => Number(item.id) === Number(button.dataset.sharePublication));
+            if (publication) this.sharePublication(publication.title);
+        });
     }
 
     applyFilters() {
@@ -180,7 +194,7 @@ class PublicationsPage {
         const endIndex = this.currentPage * this.itemsPerPage;
         const publicationsToShow = this.filteredPublications.slice(startIndex, endIndex);
 
-        container.innerHTML = publicationsToShow.map(publication => this.renderPublicationItem(publication)).join('');
+        container.innerHTML = window.MLEPSecurity.sanitize(publicationsToShow.map(publication => this.renderPublicationItem(publication)).join(''));
 
         // Show/hide load more button
         if (loadMoreContainer) {
@@ -224,7 +238,7 @@ class PublicationsPage {
                     ${publication.pdf_url ? `<a href="${publication.pdf_url}" class="publication-link publication-link--secondary" target="_blank" rel="noopener">
                         <span>📁</span> PDF
                     </a>` : ''}
-                    <button class="publication-link publication-link--secondary" onclick="window.publicationsPage.sharePublication('${publication.title}')">
+                    <button class="publication-link publication-link--secondary" data-share-publication="${Number(publication.id)}">
                         <span>🔗</span> Compartilhar
                     </button>
                 </footer>
@@ -295,50 +309,6 @@ class PublicationsPage {
         this.renderPublications();
     }
 
-    getMockPublications() {
-        return [
-            {
-                id: 1,
-                title: "Machine Learning Applications in Climate Modeling: A Comprehensive Review",
-                authors: ["Silva, A.", "Santos, B.", "Oliveira, C."],
-                abstract: "This paper presents a comprehensive review of machine learning applications in climate modeling, discussing recent advances and future directions.",
-                journal: "Environmental Science & Technology",
-                year: 2024,
-                doi: "10.1021/acs.est.2024.001",
-                pdf_url: "/papers/ml-climate-review-2024.pdf",
-                tags: ["Machine Learning", "Climate", "Review"],
-                research_area: "climate",
-                is_featured: true
-            },
-            {
-                id: 2,
-                title: "Deep Learning for Air Quality Prediction in Urban Environments",
-                authors: ["Costa, D.", "Lima, E."],
-                abstract: "We propose a deep learning approach for predicting air quality in urban environments using IoT sensor data.",
-                journal: "Atmospheric Environment",
-                year: 2023,
-                doi: "10.1016/j.atmosenv.2023.001",
-                pdf_url: "/papers/dl-air-quality-2023.pdf",
-                tags: ["Deep Learning", "Air Quality", "Urban"],
-                research_area: "air-quality",
-                is_featured: false
-            }
-        ];
-    }
-
-    sharePublication(title) {
-        if (navigator.share) {
-            navigator.share({
-                title: title,
-                url: window.location.href
-            });
-        } else {
-            // Fallback: copy to clipboard
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                alert('Link copiado para a área de transferência!');
-            });
-        }
-    }
 }
 
 // Initialize when DOM is loaded

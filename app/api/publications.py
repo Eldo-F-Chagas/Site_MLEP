@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, and_
+from sqlalchemy import func, or_
 from typing import List, Optional
 import json
 
@@ -79,7 +79,7 @@ async def get_publications(
     
     return result
 
-@router.get("/publications/{publication_id}", response_model=PublicationResponse)
+@router.get("/publications/{publication_id:int}", response_model=PublicationResponse)
 async def get_publication(publication_id: int, db: Session = Depends(get_db)):
     """Get a specific publication by ID"""
     
@@ -113,7 +113,7 @@ async def get_publications_stats(db: Session = Depends(get_db)):
     """Get publication statistics"""
     
     total = db.query(Publication).count()
-    by_year = db.query(Publication.year, db.func.count(Publication.id)).group_by(Publication.year).all()
+    by_year = db.query(Publication.year, func.count(Publication.id)).group_by(Publication.year).all()
     featured = db.query(Publication).filter(Publication.is_featured == True).count()
     
     return {

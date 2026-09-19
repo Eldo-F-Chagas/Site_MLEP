@@ -1,7 +1,10 @@
+import os
+import secrets
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from typing import List
 import logging
 
 from app.db import get_db
@@ -13,6 +16,13 @@ from app.models.contact import (
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
+
+def require_admin_token(request: Request) -> None:
+    expected = os.getenv("ADMIN_STATS_TOKEN", "")
+    provided = request.headers.get("x-admin-token", "")
+    if not expected or not secrets.compare_digest(provided, expected):
+        raise HTTPException(status_code=403, detail="Admin access required")
+
 @router.post("/contact", response_model=dict)
 async def submit_contact_form(
     contact_data: ContactCreate,
@@ -23,7 +33,7 @@ async def submit_contact_form(
     
     try:
         # Get client IP and user agent for basic spam protection
-        client_ip = request.client.host
+        client_ip = request.client.host if request.client else None
         user_agent = request.headers.get("user-agent", "")
         
         # Create contact record
@@ -122,9 +132,10 @@ async def subscribe_newsletter(
 @router.post("/newsletter/unsubscribe", response_model=dict)
 async def unsubscribe_newsletter(
     email: str,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin=Depends(require_admin_token),
 ):
-    """Unsubscribe from newsletter"""
+    """Administrative unsubscription until verified email links are configured."""
     
     try:
         subscription = db.query(Newsletter).filter(Newsletter.email == email).first()
@@ -163,14 +174,17 @@ async def unsubscribe_newsletter(
         )
 
 @router.get("/contact/stats")
-async def get_contact_stats(db: Session = Depends(get_db)):
+async def get_contact_stats(
+    db: Session = Depends(get_db),
+    _admin=Depends(require_admin_token),
+):
     """Get contact form statistics (for admin use)"""
     
     total_contacts = db.query(Contact).count()
     total_subscribers = db.query(Newsletter).filter(Newsletter.is_active == True).count()
     
-    contacts_by_type = db.query(Contact.contact_type, db.func.count(Contact.id)).group_by(Contact.contact_type).all()
-    contacts_by_status = db.query(Contact.status, db.func.count(Contact.id)).group_by(Contact.status).all()
+    contacts_by_type = db.query(Contact.contact_type, func.count(Contact.id)).group_by(Contact.contact_type).all()
+    contacts_by_status = db.query(Contact.status, func.count(Contact.id)).group_by(Contact.status).all()
     
     return {
         "total_contacts": total_contacts,

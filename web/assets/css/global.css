@@ -316,3 +316,22 @@ input, textarea, select, button {
   h1 { font-size: var(--font-size-2xl); }
   h2 { font-size: var(--font-size-xl); }
 }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+.static-preview-banner {
+  position: relative;
+  z-index: 1000;
+  padding: 0.65rem 1rem;
+  background: #fff3cd;
+  color: #4d3b00;
+  text-align: center;
+  font-size: 0.9rem;
+}

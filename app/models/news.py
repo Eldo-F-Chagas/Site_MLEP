@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Enum
 from sqlalchemy.sql import func
 from app.db import Base
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List
 from datetime import datetime
 import enum
@@ -42,7 +42,7 @@ class NewsBase(BaseModel):
     publish_date: Optional[datetime] = None
     event_date: Optional[datetime] = None
     event_location: Optional[str] = None
-    tags: Optional[List[str]] = []
+    tags: List[str] = Field(default_factory=list)
     image_url: Optional[str] = None
     external_url: Optional[str] = None
     is_featured: bool = False
@@ -71,5 +71,4 @@ class NewsResponse(NewsBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

@@ -23,6 +23,10 @@ class NewsPage {
     }
 
     async loadNews() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.news = [];
+            return;
+        }
         try {
             const response = await fetch('/api/news');
             if (response.ok) {
@@ -32,12 +36,15 @@ class NewsPage {
             }
         } catch (error) {
             console.error('Error loading news:', error);
-            // Use mock data as fallback
-            this.news = this.getMockNews();
+            this.news = [];
         }
     }
 
     async loadUpcomingEvents() {
+        if (window.MLEP_STATIC_PREVIEW) {
+            this.renderUpcomingEvents([]);
+            return;
+        }
         try {
             const response = await fetch('/api/events?upcoming=true');
             if (response.ok) {
@@ -46,8 +53,7 @@ class NewsPage {
             }
         } catch (error) {
             console.error('Error loading upcoming events:', error);
-            // Use mock events
-            this.renderUpcomingEvents(this.getMockEvents());
+            this.renderUpcomingEvents([]);
         }
     }
 
@@ -131,7 +137,7 @@ class NewsPage {
         // Render featured news
         const featuredNews = this.filteredNews.filter(item => item.is_featured).slice(0, 2);
         if (featuredContainer && featuredNews.length > 0) {
-            featuredContainer.innerHTML = featuredNews.map(item => this.renderFeaturedNewsItem(item)).join('');
+            featuredContainer.innerHTML = window.MLEPSecurity.sanitize(featuredNews.map(item => this.renderFeaturedNewsItem(item)).join(''));
         }
 
         // Render regular news
@@ -139,7 +145,7 @@ class NewsPage {
         const endIndex = this.currentPage * this.itemsPerPage;
         const newsToShow = this.filteredNews.slice(startIndex, endIndex);
 
-        newsContainer.innerHTML = newsToShow.map(item => this.renderNewsItem(item)).join('');
+        newsContainer.innerHTML = window.MLEPSecurity.sanitize(newsToShow.map(item => this.renderNewsItem(item)).join(''));
 
         // Show/hide load more button
         if (loadMoreContainer) {
@@ -168,7 +174,7 @@ class NewsPage {
     }
 
     renderNewsItem(item) {
-        const imageUrl = item.image_url || '/assets/img/news-placeholder.jpg';
+        const imageUrl = item.image_url || '/assets/img/logo/mlep-mark.svg';
         
         return `
             <article class="news-item ${item.type === 'event' ? 'news-item--event' : ''}">
@@ -222,7 +228,7 @@ class NewsPage {
             return;
         }
 
-        container.innerHTML = events.slice(0, 3).map(event => `
+        container.innerHTML = window.MLEPSecurity.sanitize(events.slice(0, 3).map(event => `
             <div class="upcoming-event">
                 <div class="upcoming-event__date">
                     <span class="upcoming-event__day">${new Date(event.event_date).getDate()}</span>
@@ -233,7 +239,7 @@ class NewsPage {
                     ${event.event_location ? `<p class="upcoming-event__location">📍 ${event.event_location}</p>` : ''}
                 </div>
             </div>
-        `).join('');
+        `).join(''));
     }
 
     async handleNewsletterSubscription(form) {
@@ -347,52 +353,6 @@ class NewsPage {
         this.renderNews();
     }
 
-    getMockNews() {
-        return [
-            {
-                id: 1,
-                title: "MLEP publica artigo sobre IA e mudanças climáticas",
-                summary: "Novo estudo do grupo MLEP foi publicado na revista Nature Climate Change.",
-                content: "Conteúdo completo do artigo...",
-                type: "achievement",
-                publish_date: "2024-01-15",
-                author: "Dr. Silva",
-                tags: ["Publicação", "IA", "Clima"],
-                is_featured: true,
-                is_published: true
-            },
-            {
-                id: 2,
-                title: "Workshop de Machine Learning Ambiental",
-                summary: "Evento gratuito sobre aplicações de ML em problemas ambientais.",
-                content: "Detalhes do workshop...",
-                type: "event",
-                publish_date: "2024-01-10",
-                event_date: "2024-02-15",
-                event_location: "Auditório Principal",
-                tags: ["Workshop", "ML", "Evento"],
-                is_featured: false,
-                is_published: true
-            }
-        ];
-    }
-
-    getMockEvents() {
-        return [
-            {
-                id: 1,
-                title: "Seminário de Pesquisa MLEP",
-                event_date: "2024-02-20",
-                event_location: "Sala de Conferências"
-            },
-            {
-                id: 2,
-                title: "Defesa de Tese - Carlos Oliveira",
-                event_date: "2024-03-05",
-                event_location: "Auditório 1"
-            }
-        ];
-    }
 }
 
 // Initialize when DOM is loaded

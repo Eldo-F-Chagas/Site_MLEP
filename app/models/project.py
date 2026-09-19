@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Enum
 from sqlalchemy.sql import func
 from app.db import Base
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List
 from datetime import datetime
 import enum
@@ -47,9 +47,9 @@ class ProjectBase(BaseModel):
     funding_agency: Optional[str] = None
     funding_amount: Optional[str] = None
     principal_investigator: Optional[str] = None
-    team_members: Optional[List[str]] = []
-    research_areas: Optional[List[str]] = []
-    keywords: Optional[List[str]] = []
+    team_members: List[str] = Field(default_factory=list)
+    research_areas: List[str] = Field(default_factory=list)
+    keywords: List[str] = Field(default_factory=list)
     datasets_url: Optional[str] = None
     repository_url: Optional[str] = None
     results_url: Optional[str] = None
@@ -83,5 +83,4 @@ class ProjectResponse(ProjectBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

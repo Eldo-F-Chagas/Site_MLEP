@@ -330,7 +330,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('/assets/img/pattern.svg') repeat;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 35%);
     opacity: 0.1;
 }
 

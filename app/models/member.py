@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Enum
 from sqlalchemy.sql import func
 from app.db import Base
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from typing import Optional, List
 from datetime import datetime
 import enum
@@ -57,8 +57,8 @@ class MemberBase(BaseModel):
     lattes: Optional[str] = None
     linkedin: Optional[str] = None
     personal_website: Optional[str] = None
-    research_interests: Optional[List[str]] = []
-    education: Optional[List[str]] = []
+    research_interests: List[str] = Field(default_factory=list)
+    education: List[str] = Field(default_factory=list)
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     is_active: bool = True
@@ -93,5 +93,4 @@ class MemberResponse(MemberBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

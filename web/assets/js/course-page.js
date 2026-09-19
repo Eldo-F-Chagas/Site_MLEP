@@ -29,12 +29,12 @@ class CoursePage {
     getCourseSlugFromURL() {
         const path = window.location.pathname;
         const match = path.match(/\/cursos\/([^\/]+)/);
-        return match ? match[1] : null;
+        return match ? decodeURIComponent(match[1]) : null;
     }
 
     async loadCourse() {
         try {
-            const response = await fetchAuth(`/api/courses/${this.courseSlug}`);
+            const response = await fetchAuth(`/api/courses/${encodeURIComponent(this.courseSlug)}`);
             if (!response) return; // Redirected to login
 
             if (response.ok) {
@@ -44,13 +44,11 @@ class CoursePage {
                 this.showNotFound();
             } else {
                 console.error('Failed to load course');
-                this.course = this.getMockCourse();
-                this.renderCourse();
+                this.showNotFound();
             }
         } catch (error) {
             console.error('Error loading course:', error);
-            this.course = this.getMockCourse();
-            this.renderCourse();
+            this.showNotFound();
         }
     }
 
@@ -66,7 +64,8 @@ class CoursePage {
         
         // Update course header
         document.getElementById('course-level').textContent = this.getLevelText(this.course.level);
-        document.getElementById('course-level').className = `course-header__badge course-header__badge--${this.course.level}`;
+        const levelClass = ['iniciante', 'intermediario', 'avancado'].includes(this.course.level) ? this.course.level : 'outro';
+        document.getElementById('course-level').className = `course-header__badge course-header__badge--${levelClass}`;
         document.getElementById('course-title').textContent = this.course.title;
         document.getElementById('course-summary').textContent = this.course.summary;
         document.getElementById('course-hours').textContent = `${this.course.hours}h`;
@@ -77,7 +76,7 @@ class CoursePage {
         this.renderTags();
         
         // Update overview content
-        document.getElementById('course-description').innerHTML = this.course.description || this.course.summary;
+        document.getElementById('course-description').textContent = this.course.description || this.course.summary;
         document.getElementById('modules-count').textContent = this.course.modules?.length || 0;
         document.getElementById('lessons-count').textContent = this.course.lesson_count || 0;
         document.getElementById('materials-count').textContent = this.course.material_count || 0;
@@ -103,7 +102,7 @@ class CoursePage {
         }
 
         tagsContainer.innerHTML = this.course.tags.map(tag => 
-            `<span class="course-header__tag">${tag}</span>`
+            `<span class="course-header__tag">${this.escapeHtml(tag)}</span>`
         ).join('');
     }
 
@@ -117,21 +116,21 @@ class CoursePage {
         modulesContainer.innerHTML = this.course.modules.map(module => `
             <div class="course-module">
                 <div class="module-header">
-                    <h3 class="module-title">${module.title}</h3>
-                    <p class="module-description">${module.description || ''}</p>
+                    <h3 class="module-title">${this.escapeHtml(module.title)}</h3>
+                    <p class="module-description">${this.escapeHtml(module.description || '')}</p>
                 </div>
                 <div class="module-lessons">
                     ${module.lessons?.map(lesson => `
                         <div class="lesson-item">
                             <div class="lesson-info">
-                                <h4 class="lesson-title">${lesson.title}</h4>
+                                <h4 class="lesson-title">${this.escapeHtml(lesson.title)}</h4>
                                 <div class="lesson-meta">
                                     <span class="lesson-duration">${this.formatDuration(lesson.video_duration)}</span>
                                     ${lesson.is_free ? '<span class="lesson-badge lesson-badge--free">Gratuito</span>' : ''}
                                 </div>
                             </div>
                             <div class="lesson-actions">
-                                <a href="/cursos/${this.courseSlug}/aulas/${lesson.slug}" class="btn btn--small btn--primary">
+                                <a href="/cursos/${encodeURIComponent(this.courseSlug)}/aulas/${encodeURIComponent(lesson.slug)}" class="btn btn--small btn--primary">
                                     Assistir
                                 </a>
                             </div>
@@ -144,7 +143,7 @@ class CoursePage {
 
     async loadForumTopics() {
         try {
-            const response = await fetch(`/api/courses/${this.courseSlug}/forum`);
+            const response = await fetch(`/api/courses/${encodeURIComponent(this.courseSlug)}/forum`, { credentials: 'include' });
             if (response.ok) {
                 const topics = await response.json();
                 this.renderForumTopics(topics);
@@ -173,10 +172,10 @@ class CoursePage {
             <div class="forum-topic">
                 <div class="topic-info">
                     <h4 class="topic-title">
-                        <a href="/cursos/${this.courseSlug}/forum/${topic.id}">${topic.title}</a>
+                        <a href="/cursos/${encodeURIComponent(this.courseSlug)}/forum/${Number(topic.id)}">${this.escapeHtml(topic.title)}</a>
                     </h4>
                     <div class="topic-meta">
-                        <span class="topic-author">Por ${topic.author}</span>
+                        <span class="topic-author">Por ${this.escapeHtml(topic.author)}</span>
                         <span class="topic-date">${this.formatDate(topic.created_at)}</span>
                         <span class="topic-replies">${topic.post_count || 0} respostas</span>
                     </div>
@@ -188,7 +187,7 @@ class CoursePage {
 
     async loadMaterials() {
         try {
-            const response = await fetch(`/api/courses/${this.courseSlug}/materials`);
+            const response = await fetch(`/api/courses/${encodeURIComponent(this.courseSlug)}/materials`, { credentials: 'include' });
             if (response.ok) {
                 const materials = await response.json();
                 this.renderMaterials(materials);
@@ -218,18 +217,18 @@ class CoursePage {
                 <div class="material-info">
                     <div class="material-icon">${this.getMaterialIcon(material.file_type)}</div>
                     <div class="material-details">
-                        <h4 class="material-title">${material.original_filename}</h4>
+                        <h4 class="material-title">${this.escapeHtml(material.original_filename)}</h4>
                         <div class="material-meta">
-                            <span class="material-type">${material.file_type.toUpperCase()}</span>
+                            <span class="material-type">${this.escapeHtml(String(material.file_type || '').toUpperCase())}</span>
                             <span class="material-size">${this.formatFileSize(material.file_size_bytes)}</span>
                             <span class="material-downloads">${material.download_count} downloads</span>
                         </div>
-                        ${material.description ? `<p class="material-description">${material.description}</p>` : ''}
+                        ${material.description ? `<p class="material-description">${this.escapeHtml(material.description)}</p>` : ''}
                     </div>
                 </div>
                 <div class="material-actions">
-                    <a href="${material.file_url}" class="btn btn--small btn--secondary" 
-                       onclick="this.trackDownload(${material.id})" download>
+                    <a href="${this.safeUrl(material.file_url)}" class="btn btn--small btn--secondary material-download"
+                       data-material-id="${Number(material.id)}" download>
                         Download
                     </a>
                 </div>
@@ -269,6 +268,12 @@ class CoursePage {
                 this.showNewTopicForm();
             });
         }
+
+        const materialsList = document.getElementById('materials-list');
+        materialsList?.addEventListener('click', (event) => {
+            const link = event.target.closest('.material-download');
+            if (link) this.trackDownload(Number(link.dataset.materialId));
+        });
     }
 
     setupTabs() {
@@ -319,7 +324,7 @@ class CoursePage {
             const firstModule = this.course.modules[0];
             if (firstModule.lessons && firstModule.lessons.length > 0) {
                 const firstLesson = firstModule.lessons[0];
-                window.location.href = `/cursos/${this.courseSlug}/aulas/${firstLesson.slug}`;
+                window.location.href = `/cursos/${encodeURIComponent(this.courseSlug)}/aulas/${encodeURIComponent(firstLesson.slug)}`;
             }
         }
     }
@@ -331,7 +336,7 @@ class CoursePage {
                 if (module.lessons) {
                     const freeLesson = module.lessons.find(lesson => lesson.is_free);
                     if (freeLesson) {
-                        window.location.href = `/cursos/${this.courseSlug}/aulas/${freeLesson.slug}`;
+                        window.location.href = `/cursos/${encodeURIComponent(this.courseSlug)}/aulas/${encodeURIComponent(freeLesson.slug)}`;
                         return;
                     }
                 }
@@ -344,7 +349,31 @@ class CoursePage {
 
     showNewTopicForm() {
         // This would open a modal or redirect to a form page
-        alert('Funcionalidade de criar tópico será implementada em breve!');
+        window.location.href = `/cursos/${encodeURIComponent(this.courseSlug)}/forum`;
+    }
+
+    async trackDownload(materialId) {
+        if (!Number.isInteger(materialId)) return;
+        await fetch(`/api/courses/${encodeURIComponent(this.courseSlug)}/materials/${materialId}/download`, {
+            method: 'POST',
+            credentials: 'include'
+        }).catch(() => {});
+    }
+
+    escapeHtml(value) {
+        const div = document.createElement('div');
+        div.textContent = value == null ? '' : String(value);
+        return div.innerHTML;
+    }
+
+    safeUrl(value) {
+        if (!value) return '#';
+        try {
+            const url = new URL(value, window.location.origin);
+            return ['http:', 'https:'].includes(url.protocol) ? this.escapeHtml(url.href) : '#';
+        } catch {
+            return '#';
+        }
     }
 
     // Utility methods
@@ -433,21 +462,6 @@ class CoursePage {
         `;
     }
 
-    getMockCourse() {
-        return {
-            id: 1,
-            slug: this.courseSlug,
-            title: 'Curso de Exemplo',
-            summary: 'Este é um curso de exemplo para demonstração.',
-            description: 'Descrição detalhada do curso de exemplo.',
-            level: 'iniciante',
-            hours: 20,
-            tags: ['exemplo', 'demo'],
-            modules: [],
-            lesson_count: 0,
-            material_count: 0
-        };
-    }
 }
 
 // Initialize when DOM is loaded
