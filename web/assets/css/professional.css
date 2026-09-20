@@ -207,7 +207,9 @@ textarea {
 .nav__logo img {
   width: 44px;
   height: 44px;
-  padding: 0.25rem;
+  padding: 0;
+  object-fit: cover;
+  object-position: center;
   background: linear-gradient(145deg, #eef4ff, #ffffff);
   border: 1px solid rgb(31 99 233 / 0.12);
   border-radius: 0.8rem;
@@ -944,7 +946,9 @@ label {
 .header__brand .logo img {
   width: 44px;
   height: 44px;
-  padding: 0.25rem;
+  padding: 0;
+  object-fit: cover;
+  object-position: center;
   background: linear-gradient(145deg, #eef4ff, #ffffff);
   border: 1px solid rgb(31 99 233 / 0.12);
   border-radius: 0.8rem;

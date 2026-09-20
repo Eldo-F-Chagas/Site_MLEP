@@ -172,7 +172,7 @@ class TeamPage {
 
     renderMemberCard(member) {
         const alumniClass = !member.is_active ? 'member-card--alumni' : '';
-        const photoUrl = member.photo_url || '/assets/img/logo/mlep-mark.svg';
+        const photoUrl = member.photo_url || '/assets/img/logo/mlep-tree-logo-v2.png';
         
         return `
             <div class="member-card ${alumniClass}" data-member-id="${member.id}">

@@ -174,7 +174,7 @@ class NewsPage {
     }
 
     renderNewsItem(item) {
-        const imageUrl = item.image_url || '/assets/img/logo/mlep-mark.svg';
+        const imageUrl = item.image_url || '/assets/img/logo/mlep-tree-logo-v2.png';
         
         return `
             <article class="news-item ${item.type === 'event' ? 'news-item--event' : ''}">
